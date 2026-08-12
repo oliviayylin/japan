@@ -28,29 +28,43 @@ MD_PATH = os.path.join(HERE, "itinerary.md")
 TEMPLATE_PATH = os.path.join(HERE, "template.html")
 OUTPUT_PATH = os.path.join(HERE, "2026名古屋上高地旅行.html")
 HERO_IMG_PATH = os.path.join(HERE, "..", "ak0604202041夏の穂高岳と河童橋・８月（上高地）.webp")
+ICONS_DIR = os.path.join(HERE, "..", "icons")
 
 PASSWORD = "2026kami"
 ITERATIONS = 250000
 
-ICONS = {
-    "景點": ("icon-sight",
-             '<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="17" cy="7" r="3"/>'
-             '<path d="M2 19c1-6 5-9 10-9s9 3 10 9z"/></svg>'),
-    "餐飲": ("icon-food",
-             '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="7" y="2.5" width="2.2" height="19" rx="1.1"/>'
-             '<rect x="14.8" y="2.5" width="2.2" height="19" rx="1.1"/></svg>'),
-    "住宿": ("icon-stay",
-             '<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="8" cy="10" r="3.4"/>'
-             '<rect x="4" y="12.5" width="16" height="7" rx="3"/></svg>'),
-    "購物": ("icon-shop",
-             '<svg viewBox="0 0 24 24" fill="currentColor">'
-             '<path d="M9 8V6.5a3 3 0 0 1 6 0V8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>'
-             '<rect x="4.5" y="8" width="15" height="12" rx="3"/></svg>'),
-    "交通": ("icon-move",
-             '<svg viewBox="0 0 24 24" fill="currentColor">'
-             '<path d="M4 15v-2.5l1.8-4a2 2 0 0 1 1.9-1.3h8.6a2 2 0 0 1 1.9 1.3l1.8 4V15z"/>'
-             '<circle cx="7.5" cy="16.5" r="2"/><circle cx="16.5" cy="16.5" r="2"/></svg>'),
+ICON_FILES = {
+    "景點": ("icon-sight", "景點(綠)_recolored.png"),
+    "餐飲": ("icon-food", "餐飲(黃)_recolored.png"),
+    "住宿": ("icon-stay", "住宿(紫)_recolored.png"),
+    "購物": ("icon-shop", "購物(粉)_recolored.png"),
+    "交通": ("icon-move", "交通(藍)_recolored.png"),
+    "班機": ("icon-flight", "班機(藍)_recolored.png"),
 }
+
+
+ICON_EMBED_PX = 64  # source icons are 256x256; downscale before embedding so the
+                     # encrypted payload doesn't carry 47 full-res copies
+
+
+def _load_icons():
+    from PIL import Image
+    import io
+
+    icons = {}
+    for tag, (css_class, filename) in ICON_FILES.items():
+        path = os.path.join(ICONS_DIR, filename)
+        img = Image.open(path).convert("RGBA")
+        img = img.resize((ICON_EMBED_PX, ICON_EMBED_PX), Image.LANCZOS)
+        buf = io.BytesIO()
+        img.save(buf, format="PNG", optimize=True)
+        b64 = base64.b64encode(buf.getvalue()).decode()
+        img_html = f'<img src="data:image/png;base64,{b64}" alt="" />'
+        icons[tag] = (css_class, img_html)
+    return icons
+
+
+ICONS = _load_icons()
 
 EVENT_RE = re.compile(
     r'^- (?P<time>[\d:–\-]+) \[(?P<tag>[^\]]+)\] (?P<rest>.+)$'
