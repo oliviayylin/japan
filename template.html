@@ -1,0 +1,440 @@
+<title>名古屋・高山・上高地 家族旅行</title>
+<style>
+  :root{
+    --paper:#FFFFFF;
+    --paper-raised:#FFFFFF;
+    --ink:#262421;
+    --ink-soft:#7A7266;
+    --accent:#C2660A;
+    --accent-ink:#8A4708;
+    --accent-soft:#F6E3CC;
+    --pine:#3F6350;
+    --pine-soft:#DCE6DD;
+    --stay:#3C5578;
+    --stay-soft:#DEE4EE;
+    --shop:#7D5490;
+    --shop-soft:#E9DEEE;
+    --tag-bg:#EFEEEA;
+    --line:#E6E1D8;
+    --shadow:rgba(38,36,33,0.10);
+    --radius:16px;
+    --sans:-apple-system,BlinkMacSystemFont,"PingFang TC","Hiragino Sans","Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif;
+    --mono:ui-monospace,"SF Mono","Menlo","Consolas",monospace;
+    color-scheme:light dark;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --paper:#1B1C20;--paper-raised:#232429;--ink:#ECE6D8;--ink-soft:#9C9384;
+      --accent:#F0924D;--accent-ink:#FFC08A;--accent-soft:rgba(240,146,77,0.18);
+      --pine:#84AB8C;--pine-soft:rgba(132,171,140,0.14);
+      --stay:#93ABD6;--stay-soft:rgba(147,171,214,0.16);
+      --shop:#C9A0DE;--shop-soft:rgba(201,160,222,0.16);
+      --tag-bg:#2C2E33;
+      --line:#34363C;--shadow:rgba(0,0,0,0.4);
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#1B1C20;--paper-raised:#232429;--ink:#ECE6D8;--ink-soft:#9C9384;
+    --accent:#F0924D;--accent-ink:#FFC08A;--accent-soft:rgba(240,146,77,0.18);
+    --pine:#84AB8C;--pine-soft:rgba(132,171,140,0.14);
+    --stay:#93ABD6;--stay-soft:rgba(147,171,214,0.16);
+    --shop:#C9A0DE;--shop-soft:rgba(201,160,222,0.16);
+    --tag-bg:#2C2E33;
+    --line:#34363C;--shadow:rgba(0,0,0,0.4);
+  }
+  :root[data-theme="light"]{
+    --paper:#FFFFFF;--paper-raised:#FFFFFF;--ink:#262421;--ink-soft:#7A7266;
+    --accent:#C2660A;--accent-ink:#8A4708;--accent-soft:#F6E3CC;
+    --pine:#3F6350;--pine-soft:#DCE6DD;
+    --stay:#3C5578;--stay-soft:#DEE4EE;
+    --shop:#7D5490;--shop-soft:#E9DEEE;
+    --tag-bg:#EFEEEA;
+    --line:#E6E1D8;--shadow:rgba(38,36,33,0.10);
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;}
+  .app{font-family:var(--sans);background:var(--paper);color:var(--ink);min-height:100vh;}
+
+  /* Hero */
+  .hero{
+    position:relative;
+    min-height:280px;
+    display:flex;
+    align-items:flex-end;
+    background:#1a1f18 url("__HERO_IMG__") center 62%/cover no-repeat;
+    color:#fff;
+  }
+  .hero::after{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(180deg,rgba(10,12,8,0) 30%,rgba(12,14,10,.55) 70%,rgba(10,11,8,.86) 100%);
+  }
+  .hero-inner{position:relative;z-index:1;padding:20px 20px 18px;width:100%;}
+  .hero-eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:#F2D9C9;margin:0 0 8px;}
+  .hero h1{font-size:24px;line-height:1.28;margin:0 0 8px;font-weight:800;text-wrap:balance;text-shadow:0 1px 12px rgba(0,0,0,.25);}
+  .hero-meta{display:flex;align-items:center;flex-wrap:wrap;gap:8px 10px;font-size:12.5px;color:rgba(255,255,255,.88);}
+  .hero-pill{font-family:var(--mono);font-weight:700;border:1px solid rgba(255,255,255,.5);border-radius:999px;padding:3px 10px;}
+
+  /* Lock screen */
+  .lockwrap{display:flex;align-items:center;justify-content:center;padding:26px 20px 40px;}
+  .lockcard{width:100%;max-width:340px;background:var(--paper-raised);border:1px solid var(--line);border-radius:18px;box-shadow:0 6px 22px var(--shadow);padding:28px 26px;text-align:center;margin-top:-46px;position:relative;z-index:2;}
+  .lockcard svg.lock-icon{width:30px;height:30px;color:var(--accent);margin:0 auto 12px;display:block;}
+  .lockcard h2{font-size:16px;margin:0 0 4px;font-weight:800;}
+  .lockcard p.hint{font-size:12.5px;color:var(--ink-soft);margin:0 0 18px;line-height:1.6;}
+  .lockcard input{width:100%;font-size:16px;padding:11px 12px;border-radius:10px;border:1px solid var(--line);background:var(--paper);color:var(--ink);text-align:center;letter-spacing:.04em;font-family:var(--mono);}
+  .lockcard input:focus{outline:2px solid var(--accent);outline-offset:1px;}
+  .lockcard button{margin-top:12px;width:100%;font-size:14.5px;font-weight:700;padding:11px 12px;border-radius:10px;border:none;background:var(--accent);color:#fff;cursor:pointer;font-family:var(--sans);}
+  .lockcard button:active{opacity:.85;}
+  .lockcard .err{min-height:18px;font-size:12.5px;color:var(--accent-ink);margin-top:10px;}
+  .lockcard .remember{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:14px;font-size:12px;color:var(--ink-soft);}
+  .lockcard .remember input{width:auto;padding:0;}
+  .clear-session-wrap{display:flex;justify-content:center;padding:6px 0 24px;}
+  .clear-session-btn{background:none;border:none;color:var(--ink-soft);font-family:var(--sans);font-size:11.5px;text-decoration:underline;cursor:pointer;padding:4px;}
+  @media (prefers-reduced-motion:no-preference){.lockcard.shake{animation:shake .35s ease;}}
+  @keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-6px);}75%{transform:translateX(6px);}}
+
+  .tabbar{position:sticky;top:0;z-index:5;display:flex;gap:7px;overflow-x:auto;padding:10px 14px;background:var(--paper);border-bottom:1px solid var(--line);scrollbar-width:none;}
+  .tabbar::-webkit-scrollbar{display:none;}
+  .tab{flex:0 0 auto;padding:7px 15px;border-radius:999px;border:none;background:var(--tag-bg);color:var(--ink-soft);font-family:var(--sans);font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;}
+  .tab[aria-selected="true"]{color:#fff;background:var(--accent);font-weight:700;}
+  main{padding:18px 18px 40px;max-width:640px;margin:0 auto;}
+  .page{display:flex;flex-direction:column;gap:18px;}
+  .page[hidden]{display:none;}
+  .day-head{display:flex;flex-direction:column;gap:8px;margin-bottom:2px;}
+  .day-head-top{display:flex;align-items:center;gap:9px;}
+  .date-tag{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--ink);background:var(--tag-bg);border-radius:8px;padding:4px 10px;flex:0 0 auto;}
+  .date-tag span{opacity:.5;margin:0 1px;font-weight:400;}
+  .wd-text{font-size:12.5px;color:var(--ink-soft);}
+  .day-head h2{margin:0;font-size:21px;font-weight:800;text-wrap:balance;}
+  .card{background:none;border:none;box-shadow:none;padding:0;}
+  .boarding-pass{background:var(--accent-soft);border:none;border-radius:var(--radius);padding:18px 16px;display:flex;align-items:center;gap:14px;}
+  .bp-leg{flex:1;text-align:center;}
+  .bp-leg .code{font-family:var(--mono);font-weight:800;font-size:20px;color:var(--ink);}
+  .bp-leg .place{font-size:11px;color:var(--ink-soft);margin-top:2px;}
+  .bp-leg .time{font-family:var(--mono);font-size:15px;margin-top:8px;font-weight:700;color:var(--accent-ink);}
+  .bp-mid{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;color:var(--ink-soft);}
+  .bp-mid .line{width:60px;height:1px;background:var(--accent);opacity:.45;position:relative;}
+  .bp-mid .line::after{content:"✈";position:absolute;left:50%;top:50%;transform:translate(-50%,-55%);font-size:11px;color:var(--accent);}
+  .bp-mid .flight{font-family:var(--mono);font-size:10px;margin-top:4px;}
+  .bp-mid .flightno{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--accent-ink);margin-top:3px;}
+
+  /* Unified day flow: events + connectors */
+  .day-flow{display:flex;flex-direction:column;}
+  .ev{display:grid;grid-template-columns:56px 1fr;column-gap:14px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line);}
+  .ev:last-child{border-bottom:none;}
+  .ev-icon{width:56px;height:56px;border-radius:14px;background:var(--tag-bg);display:flex;align-items:center;justify-content:center;flex:0 0 auto;}
+  .ev-icon svg{width:25px;height:25px;}
+  .icon-sight svg{color:var(--pine);}
+  .icon-food svg{color:var(--accent);}
+  .icon-stay svg{color:var(--stay);}
+  .icon-shop svg{color:var(--shop);}
+  .icon-move svg{color:var(--ink-soft);}
+  .ev-right{display:flex;flex-direction:column;gap:2px;min-width:0;}
+  .ev-time{font-family:var(--mono);font-size:12px;color:var(--ink-soft);font-weight:700;}
+  .ev-title{font-size:14.5px;font-weight:700;display:flex;align-items:center;gap:7px;flex-wrap:wrap;}
+  .tbd{font-family:var(--mono);font-size:10.5px;font-weight:700;color:var(--accent-ink);border:1px dashed var(--accent);border-radius:6px;padding:1px 7px;letter-spacing:.04em;}
+  .ev-sub{font-size:12.5px;color:var(--ink-soft);}
+
+  .banner{display:flex;gap:10px;align-items:flex-start;border:none;background:var(--accent-soft);border-radius:var(--radius);padding:12px 14px;font-size:13px;line-height:1.6;color:var(--accent-ink);}
+  .banner b{display:block;font-size:13px;margin-bottom:2px;}
+  .ov-list{display:flex;flex-direction:column;}
+  .ov-row{display:flex;align-items:center;gap:14px;background:none;border:none;border-bottom:1px solid var(--line);padding:14px 2px;cursor:pointer;text-align:left;width:100%;font-family:var(--sans);color:var(--ink);}
+  .ov-row:last-child{border-bottom:none;}
+  .ov-row .date-tag{width:46px;text-align:center;font-size:12.5px;}
+  .ov-body{flex:1;min-width:0;}
+  .ov-body .ttl{font-weight:700;font-size:14.5px;margin:0 0 3px;}
+  .ov-body .sub{font-size:12.5px;color:var(--ink-soft);margin:0;}
+  .ov-body .tags{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap;}
+  .tag{font-size:10.5px;font-family:var(--mono);border:none;background:var(--tag-bg);border-radius:6px;padding:2px 7px;color:var(--ink-soft);}
+  .ov-arrow{color:var(--line);font-size:16px;flex:0 0 auto;}
+
+  .transit-note{font-size:12px;color:var(--ink-soft);line-height:1.6;}
+  .geo-card{padding:12px 4px 16px;}
+  .geo-svg{width:100%;height:auto;display:block;}
+  .geo-line{stroke:var(--accent);stroke-width:2;opacity:.55;}
+  .geo-line-alt{stroke:var(--ink-soft);stroke-width:1.6;stroke-dasharray:5 4;opacity:.6;}
+  .geo-label rect{fill:var(--tag-bg);}
+  .geo-label text{font-family:var(--mono);font-size:9.5px;fill:var(--accent-ink);text-anchor:middle;dominant-baseline:middle;}
+  .geo-label-alt text{fill:var(--ink-soft);}
+  .geo-node circle{fill:var(--paper-raised);stroke:var(--accent);stroke-width:2;}
+  .geo-node text{font-family:var(--sans);font-size:12px;font-weight:700;fill:var(--ink);text-anchor:middle;}
+  .geo-node-end circle{fill:var(--accent);stroke:var(--accent);}
+  .geo-legend{display:flex;flex-direction:column;gap:6px;margin-top:10px;padding:0 8px;font-size:11.5px;color:var(--ink-soft);}
+  .geo-legend span{display:flex;align-items:center;gap:7px;}
+  .geo-swatch{width:16px;height:2px;background:var(--accent);opacity:.6;flex:0 0 auto;}
+  .geo-swatch-alt{background:none;border-top:2px dashed var(--ink-soft);opacity:.7;}
+
+  a{color:var(--accent-ink);}
+
+  main[hidden]{display:none;}
+  .tabbar[hidden]{display:none;}
+  .lockwrap[hidden]{display:none;}
+</style>
+
+<div class="app">
+  <div class="hero">
+    <div class="hero-inner">
+      <p class="hero-eyebrow">日本中部・岐阜／長野／愛知</p>
+      <h1>名古屋・高山・上高地 家族旅行</h1>
+      <div class="hero-meta">
+        <span class="hero-pill">8天7夜</span>
+        <span>2026.10.03 – 10.10</span>
+        <span>・8大2小・10位旅伴同行</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="lockwrap" id="lockwrap">
+    <div class="lockcard" id="lockcard">
+      <svg class="lock-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a5 5 0 0 0-5 5v3H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-1V7a5 5 0 0 0-5-5zm-3 8V7a3 3 0 0 1 6 0v3H9zm3 4a1.6 1.6 0 0 1 .9 2.92V19a.9.9 0 0 1-1.8 0v-2.08A1.6 1.6 0 0 1 12 14z"/></svg>
+      <h2>行程內容已加密</h2>
+      <p class="hint">請輸入密碼以檢視完整行程</p>
+      <input type="password" id="pwInput" placeholder="密碼" autocomplete="off" inputmode="text" />
+      <button type="button" id="unlockBtn">解鎖</button>
+      <label class="remember"><input type="checkbox" id="rememberCheck" checked /> 記住這台裝置 14 天</label>
+      <div class="err" id="pwErr"></div>
+    </div>
+  </div>
+
+  <nav class="tabbar" id="tabbar" role="tablist" hidden></nav>
+
+  <main id="mainContent" hidden></main>
+
+  <div class="clear-session-wrap" id="clearSessionWrap" hidden>
+    <button type="button" class="clear-session-btn" id="clearSessionBtn">清除本機記住的解鎖狀態</button>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  var ENC = {
+    salt: "__ENC_SALT__",
+    iv: "__ENC_IV__",
+    ciphertext: "__ENC_CT__",
+    iterations: __ENC_ITER__
+  };
+
+  var SESSION_KEY = "nagoya_trip_session";
+  var SESSION_TTL_MS = 14 * 24 * 60 * 60 * 1000; // 14 天
+
+  function b64ToBytes(b64){
+    var bin = atob(b64);
+    var bytes = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i++){ bytes[i] = bin.charCodeAt(i); }
+    return bytes;
+  }
+
+  function bytesToB64(bytes){
+    var bin = "";
+    for (var i = 0; i < bytes.length; i++){ bin += String.fromCharCode(bytes[i]); }
+    return btoa(bin);
+  }
+
+  function hasStorage(){
+    return (typeof window.storage !== "undefined") && window.storage;
+  }
+
+  async function saveSession(rawKeyBytes){
+    if(!hasStorage()) return;
+    try {
+      var payload = JSON.stringify({
+        key: bytesToB64(rawKeyBytes),
+        expires: Date.now() + SESSION_TTL_MS
+      });
+      await window.storage.set(SESSION_KEY, payload, false);
+    } catch(e){ /* ignore storage failures */ }
+  }
+
+  async function loadSession(){
+    if(!hasStorage()) return null;
+    try {
+      var result = await window.storage.get(SESSION_KEY, false);
+      if(!result || !result.value) return null;
+      var session = JSON.parse(result.value);
+      if(!session.expires || Date.now() >= session.expires) return null;
+      return session;
+    } catch(e){
+      return null;
+    }
+  }
+
+  async function clearSession(){
+    if(!hasStorage()) return;
+    try { await window.storage.delete(SESSION_KEY, false); } catch(e){ /* ignore */ }
+  }
+
+  async function tryUnlock(password){
+    try {
+      var enc = new TextEncoder();
+      var keyMaterial = await crypto.subtle.importKey(
+        "raw", enc.encode(password), { name: "PBKDF2" }, false, ["deriveKey"]
+      );
+      var key = await crypto.subtle.deriveKey(
+        { name: "PBKDF2", salt: b64ToBytes(ENC.salt), iterations: ENC.iterations, hash: "SHA-256" },
+        keyMaterial,
+        { name: "AES-GCM", length: 256 },
+        true,
+        ["decrypt"]
+      );
+      var plainBuf = await crypto.subtle.decrypt(
+        { name: "AES-GCM", iv: b64ToBytes(ENC.iv) },
+        key,
+        b64ToBytes(ENC.ciphertext)
+      );
+      var plaintext = new TextDecoder().decode(plainBuf);
+      var data = JSON.parse(plaintext);
+      var rawKeyBytes = new Uint8Array(await crypto.subtle.exportKey("raw", key));
+      return { data: data, rawKeyBytes: rawKeyBytes };
+    } catch (e){
+      return null;
+    }
+  }
+
+  async function decryptWithRawKey(rawKeyBytes){
+    var key = await crypto.subtle.importKey("raw", rawKeyBytes, { name: "AES-GCM" }, false, ["decrypt"]);
+    var plainBuf = await crypto.subtle.decrypt(
+      { name: "AES-GCM", iv: b64ToBytes(ENC.iv) },
+      key,
+      b64ToBytes(ENC.ciphertext)
+    );
+    var plaintext = new TextDecoder().decode(plainBuf);
+    return JSON.parse(plaintext);
+  }
+
+  function showError(msg){
+    var card = document.getElementById("lockcard");
+    document.getElementById("pwErr").textContent = msg;
+    card.classList.remove("shake");
+    void card.offsetWidth;
+    card.classList.add("shake");
+  }
+
+  function renderApp(data){
+    document.getElementById("lockwrap").hidden = true;
+    var clearWrap = document.getElementById("clearSessionWrap");
+    if(clearWrap) clearWrap.hidden = false;
+
+    var mainEl = document.getElementById("mainContent");
+    mainEl.innerHTML = data.mainHTML;
+    mainEl.hidden = false;
+
+    var tabbar = document.getElementById("tabbar");
+    tabbar.hidden = false;
+
+    var days = data.days;
+    var tabsMeta = [{id:"overview", label:"總覽"}, {id:"transit", label:"交通"}];
+    days.forEach(function(d,i){ tabsMeta.push({id:d.id, label:"D"+(i+1)}); });
+
+    tabsMeta.forEach(function(t){
+      var btn = document.createElement("button");
+      btn.className = "tab";
+      btn.type = "button";
+      btn.setAttribute("role","tab");
+      btn.dataset.target = t.id;
+      btn.textContent = t.label;
+      btn.addEventListener("click", function(){ showPage(t.id); });
+      tabbar.appendChild(btn);
+    });
+
+    function showPage(id){
+      document.querySelectorAll(".page").forEach(function(p){ p.hidden = (p.id !== id); });
+      document.querySelectorAll(".tab").forEach(function(b){
+        b.setAttribute("aria-selected", b.dataset.target === id ? "true" : "false");
+      });
+      var active = document.querySelector('.tab[data-target="'+id+'"]');
+      if(active) active.scrollIntoView({inline:"center", block:"nearest", behavior:"smooth"});
+      window.scrollTo({top:0, behavior:"instant"});
+    }
+
+    var ovList = document.getElementById("ovList");
+    days.forEach(function(d){
+      var card = document.createElement("button");
+      card.className = "ov-row";
+      card.type = "button";
+      card.addEventListener("click", function(){ showPage(d.id); });
+
+      var badge = document.createElement("span");
+      badge.className = "date-tag";
+      badge.innerHTML = d.month + "<span>/</span>" + d.day;
+      card.appendChild(badge);
+
+      var body = document.createElement("div");
+      body.className = "ov-body";
+      var ttl = document.createElement("p");
+      ttl.className = "ttl";
+      ttl.textContent = "Day " + (days.indexOf(d)+1) + "・" + d.ttl;
+      var sub = document.createElement("p");
+      sub.className = "sub";
+      sub.textContent = d.sub;
+      var tags = document.createElement("div");
+      tags.className = "tags";
+      d.tags.forEach(function(tg){
+        var s = document.createElement("span");
+        s.className = "tag";
+        s.textContent = tg;
+        tags.appendChild(s);
+      });
+      body.appendChild(ttl); body.appendChild(sub); body.appendChild(tags);
+      card.appendChild(body);
+
+      var arrow = document.createElement("span");
+      arrow.className = "ov-arrow";
+      arrow.textContent = "›";
+      card.appendChild(arrow);
+
+      ovList.appendChild(card);
+    });
+
+    showPage("overview");
+  }
+
+  async function attemptUnlock(){
+    var pw = document.getElementById("pwInput").value;
+    if(!pw){ showError("請輸入密碼"); return; }
+    var btn = document.getElementById("unlockBtn");
+    btn.disabled = true;
+    btn.textContent = "解鎖中…";
+    var result = await tryUnlock(pw);
+    btn.disabled = false;
+    btn.textContent = "解鎖";
+    if(!result){
+      showError("密碼錯誤，請再試一次");
+      return;
+    }
+    var rememberCheck = document.getElementById("rememberCheck");
+    if(rememberCheck && rememberCheck.checked){
+      await saveSession(result.rawKeyBytes);
+    }
+    renderApp(result.data);
+  }
+
+  async function init(){
+    var session = await loadSession();
+    if(session){
+      try {
+        var rawKeyBytes = b64ToBytes(session.key);
+        var data = await decryptWithRawKey(rawKeyBytes);
+        renderApp(data);
+        return;
+      } catch(e){
+        await clearSession();
+      }
+    }
+    // no valid session: show lock screen (already visible by default)
+  }
+
+  document.getElementById("unlockBtn").addEventListener("click", attemptUnlock);
+  document.getElementById("pwInput").addEventListener("keydown", function(e){
+    if(e.key === "Enter"){ attemptUnlock(); }
+  });
+  var clearBtn = document.getElementById("clearSessionBtn");
+  if(clearBtn){
+    clearBtn.addEventListener("click", async function(){
+      await clearSession();
+      window.location.reload();
+    });
+  }
+
+  init();
+})();
+</script>
