@@ -85,6 +85,10 @@
   .lockcard button{margin-top:12px;width:100%;font-size:14.5px;font-weight:700;padding:11px 12px;border-radius:10px;border:none;background:var(--accent);color:#fff;cursor:pointer;font-family:var(--sans);}
   .lockcard button:active{opacity:.85;}
   .lockcard .err{min-height:18px;font-size:12.5px;color:var(--accent-ink);margin-top:10px;}
+  .lockcard .remember{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:14px;font-size:12px;color:var(--ink-soft);}
+  .lockcard .remember input{width:auto;padding:0;}
+  .clear-session-wrap{display:flex;justify-content:center;padding:6px 0 24px;}
+  .clear-session-btn{background:none;border:none;color:var(--ink-soft);font-family:var(--sans);font-size:11.5px;text-decoration:underline;cursor:pointer;padding:4px;}
   @media (prefers-reduced-motion:no-preference){.lockcard.shake{animation:shake .35s ease;}}
   @keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-6px);}75%{transform:translateX(6px);}}
 
@@ -186,6 +190,7 @@
         <p class="hint">請輸入密碼以檢視完整行程</p>
         <input type="password" id="pwInput" placeholder="密碼" autocomplete="off" inputmode="text" />
         <button type="button" id="unlockBtn">解鎖</button>
+        <label class="remember"><input type="checkbox" id="rememberCheck" checked /> 記住這台裝置 7 天</label>
         <div class="err" id="pwErr"></div>
       </div>
     </div>
@@ -193,6 +198,10 @@
     <nav class="tabbar" id="tabbar" role="tablist" hidden></nav>
 
   <main id="mainContent" hidden></main>
+
+  <div class="clear-session-wrap" id="clearSessionWrap" hidden>
+    <button type="button" class="clear-session-btn" id="clearSessionBtn">清除本機記住的解鎖狀態</button>
+  </div>
 
 </div>
 
@@ -205,11 +214,53 @@
     iterations: 250000
   };
 
+  var SESSION_KEY = "nagoya_trip_session";
+  var SESSION_TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 天
+
   function b64ToBytes(b64){
     var bin = atob(b64);
     var bytes = new Uint8Array(bin.length);
     for (var i = 0; i < bin.length; i++){ bytes[i] = bin.charCodeAt(i); }
     return bytes;
+  }
+
+  function bytesToB64(bytes){
+    var bin = "";
+    for (var i = 0; i < bytes.length; i++){ bin += String.fromCharCode(bytes[i]); }
+    return btoa(bin);
+  }
+
+  function hasStorage(){
+    return (typeof window.storage !== "undefined") && window.storage;
+  }
+
+  async function saveSession(rawKeyBytes){
+    if(!hasStorage()) return;
+    try {
+      var payload = JSON.stringify({
+        key: bytesToB64(rawKeyBytes),
+        expires: Date.now() + SESSION_TTL_MS
+      });
+      await window.storage.set(SESSION_KEY, payload, false);
+    } catch(e){ /* ignore storage failures */ }
+  }
+
+  async function loadSession(){
+    if(!hasStorage()) return null;
+    try {
+      var result = await window.storage.get(SESSION_KEY, false);
+      if(!result || !result.value) return null;
+      var session = JSON.parse(result.value);
+      if(!session.expires || Date.now() >= session.expires) return null;
+      return session;
+    } catch(e){
+      return null;
+    }
+  }
+
+  async function clearSession(){
+    if(!hasStorage()) return;
+    try { await window.storage.delete(SESSION_KEY, false); } catch(e){ /* ignore */ }
   }
 
   async function tryUnlock(password){
@@ -222,7 +273,7 @@
         { name: "PBKDF2", salt: b64ToBytes(ENC.salt), iterations: ENC.iterations, hash: "SHA-256" },
         keyMaterial,
         { name: "AES-GCM", length: 256 },
-        false,
+        true,
         ["decrypt"]
       );
       var plainBuf = await crypto.subtle.decrypt(
@@ -231,10 +282,23 @@
         b64ToBytes(ENC.ciphertext)
       );
       var plaintext = new TextDecoder().decode(plainBuf);
-      return JSON.parse(plaintext);
+      var data = JSON.parse(plaintext);
+      var rawKeyBytes = new Uint8Array(await crypto.subtle.exportKey("raw", key));
+      return { data: data, rawKeyBytes: rawKeyBytes };
     } catch (e){
       return null;
     }
+  }
+
+  async function decryptWithRawKey(rawKeyBytes){
+    var key = await crypto.subtle.importKey("raw", rawKeyBytes, { name: "AES-GCM" }, false, ["decrypt"]);
+    var plainBuf = await crypto.subtle.decrypt(
+      { name: "AES-GCM", iv: b64ToBytes(ENC.iv) },
+      key,
+      b64ToBytes(ENC.ciphertext)
+    );
+    var plaintext = new TextDecoder().decode(plainBuf);
+    return JSON.parse(plaintext);
   }
 
   function showError(msg){
@@ -247,6 +311,8 @@
 
   function renderApp(data){
     document.getElementById("lockwrap").hidden = true;
+    var clearWrap = document.getElementById("clearSessionWrap");
+    if(clearWrap) clearWrap.hidden = false;
 
     var mainEl = document.getElementById("mainContent");
     mainEl.innerHTML = data.mainHTML;
@@ -328,19 +394,47 @@
     var btn = document.getElementById("unlockBtn");
     btn.disabled = true;
     btn.textContent = "解鎖中…";
-    var data = await tryUnlock(pw);
+    var result = await tryUnlock(pw);
     btn.disabled = false;
     btn.textContent = "解鎖";
-    if(!data){
+    if(!result){
       showError("密碼錯誤，請再試一次");
       return;
     }
-    renderApp(data);
+    var rememberCheck = document.getElementById("rememberCheck");
+    if(rememberCheck && rememberCheck.checked){
+      await saveSession(result.rawKeyBytes);
+    }
+    renderApp(result.data);
+  }
+
+  async function init(){
+    var session = await loadSession();
+    if(session){
+      try {
+        var rawKeyBytes = b64ToBytes(session.key);
+        var data = await decryptWithRawKey(rawKeyBytes);
+        renderApp(data);
+        return;
+      } catch(e){
+        await clearSession();
+      }
+    }
+    // no valid session: show lock screen (already visible by default)
   }
 
   document.getElementById("unlockBtn").addEventListener("click", attemptUnlock);
   document.getElementById("pwInput").addEventListener("keydown", function(e){
     if(e.key === "Enter"){ attemptUnlock(); }
   });
+  var clearBtn = document.getElementById("clearSessionBtn");
+  if(clearBtn){
+    clearBtn.addEventListener("click", async function(){
+      await clearSession();
+      window.location.reload();
+    });
+  }
+
+  init();
 })();
 </script>
