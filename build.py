@@ -67,7 +67,7 @@ def _load_icons():
 ICONS = _load_icons()
 
 EVENT_RE = re.compile(
-    r'^- (?P<time>[\d:–\-]+) \[(?P<tag>[^\]]+)\] (?P<rest>.+)$'
+    r'^- (?:(?P<time>[\d:–\-]+) )?\[(?P<tag>[^\]]+)\] (?P<rest>.+)$'
 )
 
 
@@ -98,7 +98,10 @@ def render_event(ev):
     if ev["tbd"]:
         title_html += ' <span class="tbd">TBD</span>'
     parts = [f'<div class="ev-icon {icon_class}">{icon_svg}</div>']
-    right = f'<span class="ev-time">{ev["time"]}</span><span class="ev-title">{title_html}</span>'
+    right = ""
+    if ev["time"]:
+        right += f'<span class="ev-time">{ev["time"]}</span>'
+    right += f'<span class="ev-title">{title_html}</span>'
     if ev["sub"]:
         right += f'<span class="ev-sub">{ev["sub"]}</span>'
     parts.append(f'<div class="ev-right">{right}</div>')
