@@ -190,7 +190,7 @@
         <p class="hint">請輸入密碼以檢視完整行程</p>
         <input type="password" id="pwInput" placeholder="密碼" autocomplete="off" inputmode="text" />
         <button type="button" id="unlockBtn">解鎖</button>
-        <label class="remember"><input type="checkbox" id="rememberCheck" checked /> 記住這台裝置 7 天</label>
+        <label class="remember"><input type="checkbox" id="rememberCheck" checked /> 記住這台裝置 14 天</label>
         <div class="err" id="pwErr"></div>
       </div>
     </div>
@@ -215,7 +215,7 @@
   };
 
   var SESSION_KEY = "nagoya_trip_session";
-  var SESSION_TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 天
+  var SESSION_TTL_MS = 14 * 24 * 60 * 60 * 1000; // 14 天
 
   function b64ToBytes(b64){
     var bin = atob(b64);
