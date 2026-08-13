@@ -140,7 +140,11 @@
   .ov-body .ttl{font-weight:700;font-size:14.5px;margin:0 0 3px;}
   .ov-body .sub{font-size:12.5px;color:var(--ink-soft);margin:0;}
   .ov-body .tags{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap;}
-  .tag{font-size:10.5px;font-family:var(--mono);border:none;background:var(--tag-bg);border-radius:6px;padding:2px 7px;color:var(--ink-soft);}
+  .tag{font-size:10.5px;font-family:var(--mono);border:none;border-radius:6px;padding:2px 7px;}
+  .tag-c0{color:var(--pine);background:var(--pine-soft);}
+  .tag-c1{color:var(--accent-ink);background:var(--accent-soft);}
+  .tag-c2{color:var(--stay);background:var(--stay-soft);}
+  .tag-c3{color:var(--shop);background:var(--shop-soft);}
   .ov-arrow{color:var(--line);font-size:16px;flex:0 0 auto;}
 
   .geo-card{padding:16px 4px;}
@@ -359,7 +363,9 @@
       tags.className = "tags";
       d.tags.forEach(function(tg){
         var s = document.createElement("span");
-        s.className = "tag";
+        var hash = 0;
+        for(var i=0;i<tg.length;i++){ hash = (hash*31 + tg.charCodeAt(i)) % 4; }
+        s.className = "tag tag-c" + Math.abs(hash);
         s.textContent = tg;
         tags.appendChild(s);
       });
