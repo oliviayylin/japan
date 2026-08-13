@@ -228,8 +228,6 @@ def parse_markdown(md_text):
 
 GEO_SECTION = '''    <!-- TRANSIT -->
     <section class="page" id="transit" role="tabpanel" hidden>
-      <div class="transit-note">主辦人原始總覽頁上手繪的景點間交通時間估算，節點位置依實際地理相對位置繪製，僅供路線安排參考，實際依交通方式與路況而定。</div>
-
       <div class="card geo-card">
         <svg viewBox="0 0 340 460" class="geo-svg" role="img" aria-label="行程地點相對位置與交通時間示意圖">
           <line x1="55" y1="55" x2="100" y2="105" class="geo-line"></line>
@@ -240,8 +238,7 @@ GEO_SECTION = '''    <!-- TRANSIT -->
           <line x1="210" y1="265" x2="225" y2="300" class="geo-line"></line>
           <line x1="225" y1="300" x2="135" y2="375" class="geo-line"></line>
           <line x1="135" y1="375" x2="150" y2="430" class="geo-line"></line>
-          <line x1="150" y1="430" x2="35" y2="160" class="geo-line"></line>
-          <line x1="35" y1="160" x2="135" y2="375" class="geo-line geo-line-alt"></line>
+          <line x1="150" y1="430" x2="35" y2="160" class="geo-line geo-line-strong"></line>
 
           <g class="geo-label"><rect x="60" y="70" width="34" height="16" rx="8"></rect><text x="77" y="81">30分</text></g>
           <g class="geo-label"><rect x="48" y="122" width="38" height="16" rx="8"></rect><text x="67" y="133">45分</text></g>
@@ -251,8 +248,7 @@ GEO_SECTION = '''    <!-- TRANSIT -->
           <g class="geo-label"><rect x="200" y="272" width="34" height="16" rx="8"></rect><text x="217" y="283">19分</text></g>
           <g class="geo-label"><rect x="158" y="327" width="46" height="16" rx="8"></rect><text x="181" y="338">1h15</text></g>
           <g class="geo-label"><rect x="122" y="392" width="34" height="16" rx="8"></rect><text x="139" y="403">50分</text></g>
-          <g class="geo-label"><rect x="78" y="298" width="46" height="16" rx="8"></rect><text x="101" y="309">2h43</text></g>
-          <g class="geo-label geo-label-alt"><rect x="52" y="248" width="46" height="16" rx="8"></rect><text x="75" y="259">2h11</text></g>
+          <g class="geo-label geo-label-strong"><rect x="72" y="298" width="58" height="16" rx="8"></rect><text x="101" y="309">2h43・Day1</text></g>
 
           <g class="geo-node"><circle cx="55" cy="55" r="7"></circle><text x="55" y="40">上高地</text></g>
           <g class="geo-node"><circle cx="100" cy="105" r="7"></circle><text x="112" y="102" text-anchor="start">平湯溫泉</text></g>
@@ -264,10 +260,6 @@ GEO_SECTION = '''    <!-- TRANSIT -->
           <g class="geo-node"><circle cx="135" cy="375" r="7"></circle><text x="121" y="379" text-anchor="end">名古屋</text></g>
           <g class="geo-node geo-node-end"><circle cx="150" cy="430" r="7"></circle><text x="150" y="448">中部機場</text></g>
         </svg>
-        <div class="geo-legend">
-          <span><i class="geo-swatch"></i>本行程實際使用路線</span>
-          <span><i class="geo-swatch geo-swatch-alt"></i>直達參考路線（本行程未採用）</span>
-        </div>
       </div>
     </section>
 '''
