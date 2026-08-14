@@ -377,6 +377,11 @@ def main():
         f.write(out)
     print(f"Wrote {OUTPUT_PATH} ({len(out)} bytes)")
 
+    index_path = os.path.join(HERE, "index.html")
+    with open(index_path, "w", encoding="utf-8") as f:
+        f.write(out)
+    print(f"Wrote {index_path} (for GitHub Pages)")
+
 
 if __name__ == "__main__":
     main()

@@ -28,9 +28,22 @@
 ## 修改行程內容的標準流程
 
 1. 編輯 `itinerary.md`（文字內容、時間、TBD 標記等）
-2. 執行 `python3 build.py`
-3. 把新產生的 `2026名古屋上高地旅行.html` 交給 Claude Code 重新發布到 Artifact（同一個網址會自動更新）
-4. `git add -A && git commit -m "..."` 記錄這次變動
+2. 執行 `python3 build.py`（會同時產生 `2026名古屋上高地旅行.html` 和 `index.html`，兩份內容一樣）
+3. `git add -A && git commit -m "..."` 記錄這次變動
+4. `git push` 推到 GitHub（`origin/master`），GitHub Pages 會自動抓 `index.html` 更新網頁
+5. 也可以把 `2026名古屋上高地旅行.html` 交給 Claude Code 重新發布到 Artifact，兩個連結並存
+
+## 部署（GitHub Pages）
+
+Repo：https://github.com/oliviayylin/japan
+
+推送用 SSH（金鑰在 `~/.ssh/id_ed25519_japan_trip`，`~/.ssh/config` 裡已設定 `github.com` 專用這把鑰匙）：
+
+```
+git push origin master
+```
+
+GitHub Pages 網址設定完成後會是固定的、不會變動，跟 Artifact 連結不同但內容同步——這樣就算 Artifact 平台不支援 localStorage，GitHub Pages 是一般網頁環境，「記住裝置」功能可以正常運作。
 
 ## itinerary.md 語法
 
