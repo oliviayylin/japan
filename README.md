@@ -84,5 +84,5 @@ CSS 全是明文，直接改 `template.html` 的 `<style>` 就好，不用碰加
 
 ## 已知限制
 
-- 「記住這台裝置」用的是 `window.storage`（claude.ai artifact 平台專屬 API），但這個能力目前**不在**這個 Artifact 環境開放的 capability 清單裡（只有 `downloads` 和 `mcp`），所以目前這個功能會靜默失效、退回成每次都要輸入密碼——程式碼保留著（未來如果平台開放了這個能力就能直接生效），但現階段不要predict它會動。
+- 「記住這台裝置」原本用的是 `window.storage`（claude.ai artifact 平台專屬 API），但這個能力不在 Artifact 環境開放的 capability 清單裡，導致在 claude.ai 上這個功能會靜默失效。改用 GitHub Pages 部署之後已經改成瀏覽器原生的 `localStorage`（一般網域不受 Artifact 沙盒限制），實測可以正常記住 14 天。**這代表 claude.ai Artifact 版本跟 GitHub Pages 版本的「記住裝置」行為不一樣**：Artifact 版本每次都要重新輸入密碼，GitHub Pages 版本才會真的記住。
 - 交通時間地理示意圖（`## 交通時間參考`章節、地圖节点座標）目前不是從 `itinerary.md` 動態產生，是寫死在 `build.py` 的 `GEO_SECTION` 常數裡（因為節點座標是手動排版的視覺效果，不適合用文字格式描述）。要改地圖版面要直接改 `build.py`。

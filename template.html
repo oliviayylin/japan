@@ -224,7 +224,11 @@
   }
 
   function hasStorage(){
-    return (typeof window.storage !== "undefined") && window.storage;
+    try {
+      return typeof window.localStorage !== "undefined" && window.localStorage !== null;
+    } catch(e){
+      return false;
+    }
   }
 
   async function saveSession(rawKeyBytes){
@@ -234,16 +238,16 @@
         key: bytesToB64(rawKeyBytes),
         expires: Date.now() + SESSION_TTL_MS
       });
-      await window.storage.set(SESSION_KEY, payload, false);
+      window.localStorage.setItem(SESSION_KEY, payload);
     } catch(e){ /* ignore storage failures */ }
   }
 
   async function loadSession(){
     if(!hasStorage()) return null;
     try {
-      var result = await window.storage.get(SESSION_KEY, false);
-      if(!result || !result.value) return null;
-      var session = JSON.parse(result.value);
+      var raw = window.localStorage.getItem(SESSION_KEY);
+      if(!raw) return null;
+      var session = JSON.parse(raw);
       if(!session.expires || Date.now() >= session.expires) return null;
       return session;
     } catch(e){
@@ -253,7 +257,7 @@
 
   async function clearSession(){
     if(!hasStorage()) return;
-    try { await window.storage.delete(SESSION_KEY, false); } catch(e){ /* ignore */ }
+    try { window.localStorage.removeItem(SESSION_KEY); } catch(e){ /* ignore */ }
   }
 
   async function tryUnlock(password){
