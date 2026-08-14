@@ -30,7 +30,16 @@ OUTPUT_PATH = os.path.join(HERE, "2026名古屋上高地旅行.html")
 HERO_IMG_PATH = os.path.join(HERE, "..", "ak0604202041夏の穂高岳と河童橋・８月（上高地）.webp")
 ICONS_DIR = os.path.join(HERE, "..", "icons")
 
-PASSWORD = "2026kami"
+SECRET_PATH = os.path.join(HERE, ".secret_password")
+if not os.path.exists(SECRET_PATH):
+    raise SystemExit(
+        f"Missing {SECRET_PATH}. This file holds the site password and is "
+        f"gitignored on purpose (never commit a plaintext password). "
+        f"Create it with: echo -n 'yourpassword' > {SECRET_PATH}"
+    )
+with open(SECRET_PATH, "r", encoding="utf-8") as f:
+    PASSWORD = f.read().strip()
+
 ITERATIONS = 250000
 
 ICON_FILES = {
