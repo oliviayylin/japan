@@ -79,6 +79,14 @@ EVENT_RE = re.compile(
     r'^- (?:(?P<time>[\d:–\-]+) )?\[(?P<tag>[^\]]+)\] (?P<rest>.+)$'
 )
 
+LINK_RE = re.compile(r'\[([^\]]+)\]\((https?://[^\s)]+)\)')
+
+
+def linkify(text):
+    if text is None:
+        return text
+    return LINK_RE.sub(r'<a href="\2" target="_blank" rel="noopener">\1</a>', text)
+
 
 def parse_event_line(line):
     m = EVENT_RE.match(line.strip())
@@ -103,7 +111,7 @@ def parse_event_line(line):
 
 def render_event(ev):
     icon_class, icon_svg = ICONS[ev["tag"]]
-    title_html = ev["title"]
+    title_html = linkify(ev["title"])
     if ev["tbd"]:
         title_html += ' <span class="tbd">TBD</span>'
     parts = [f'<div class="ev-icon {icon_class}">{icon_svg}</div>']
@@ -112,7 +120,7 @@ def render_event(ev):
         right += f'<span class="ev-time">{ev["time"]}</span>'
     right += f'<span class="ev-title">{title_html}</span>'
     if ev["sub"]:
-        right += f'<span class="ev-sub">{ev["sub"]}</span>'
+        right += f'<span class="ev-sub">{linkify(ev["sub"])}</span>'
     parts.append(f'<div class="ev-right">{right}</div>')
     return f'          <div class="ev">{"".join(parts)}</div>'
 
@@ -137,7 +145,7 @@ def parse_stay_line(line):
 def render_stay(stay):
     icon_class, icon_svg = ICONS["住宿"]
     if stay["name"]:
-        title_html = stay["name"]
+        title_html = linkify(stay["name"])
         if stay["tbd"]:
             title_html += ' <span class="tbd">TBD</span>'
     else:
@@ -145,7 +153,7 @@ def render_stay(stay):
         title_html = "住宿未定"
     right = f'<span class="ev-title">{title_html}</span>'
     if stay["note"]:
-        right += f'<span class="ev-sub">{stay["note"]}</span>'
+        right += f'<span class="ev-sub">{linkify(stay["note"])}</span>'
     return (
         f'          <div class="ev"><div class="ev-icon {icon_class}">{icon_svg}</div>'
         f'<div class="ev-right">{right}</div></div>'

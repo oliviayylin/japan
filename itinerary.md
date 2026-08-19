@@ -17,7 +17,7 @@
 - 11:20 [交通] Times 取車，前往高山 — 抵達後到Access Plaza，全家旁電梯到1F；中途停長良川休息、吃午餐
 - 15:00 [住宿] 民宿放東西、休息
 - [景點] 高山老街閒逛 — 民宿步行約10分鐘
-- [餐飲] 晚餐：Restaurant Shiki 四季 (TBD)
+- [餐飲] 晚餐：[Restaurant Shiki 四季](https://www.google.com/maps/search/?api=1&query=Restaurant%20Shiki%20%E5%9B%9B%E5%AD%A3%20%E9%AB%98%E5%B1%B1%E5%B8%82) (TBD)
 
 ## 住宿
 住宿：民宿「和美庵」— 高山市
@@ -30,14 +30,14 @@
 標籤: 和服, 上高地
 
 ## 行程
-- [餐飲] 早餐：Brand New Day Coffee — 步行8分鐘
+- [餐飲] 早餐：[Brand New Day Coffee](https://www.google.com/maps/search/?api=1&query=Brand%20New%20Day%20Coffee%20%E9%AB%98%E5%B1%B1%E5%B8%82) — 步行8分鐘
 - 10:00 [景點] 和服體驗「中田呉服店」— 步行8分鐘
 - 12:00 [餐飲] 高山老街隨意吃 — 步行5分鐘
 - 15:00 [交通] 前往平湯溫泉 — 自駕45分鐘抵達平湯溫泉，導航至 Akandana Parking 停車
 - 16:30 [交通] 平湯溫泉搭巴士,導航至「Akandana parking」停車 — 車程約 30 分鐘
 - 17:00 [住宿] 抵達上高地，飯店放行李
-- [景點] 隨意走走 — 有體力的人可以去走步道；岳澤濕原看枯木倒影，早晨和黃昏最美
-- 18:30 [餐飲] 晚餐：白樺莊飯店西式料理
+- [景點] 隨意走走 — 有體力的人可以去走步道；岳澤濕原看枯木倒影，早晨和黃昏最美 · [步道路線](https://www.kamikochi.org/tw/thingstodo/walking)
+- 18:30 [餐飲] 晚餐：[白樺莊飯店](https://www.google.com/maps/search/?api=1&query=%E7%99%BD%E6%A8%BA%E8%8D%98%20%E4%B8%8A%E9%AB%98%E5%9C%B0)西式料理
 
 ## 住宿
 住宿：白樺莊飯店
@@ -50,11 +50,11 @@
 標籤: 上高地
 
 ## 行程
-- 07:30 [餐飲] 早餐：白樺莊飯店自助式早餐
-- [景點] 河童橋 ⟷ 明神橋 健行
-- [餐飲] 午餐：五千尺飯店内河童食堂
-- [餐飲] 下午茶：TROIS CINQ 蘋果派
-- [景點] 河童橋 ⟷ 大正池 健行
+- 07:30 [餐飲] 早餐：[白樺莊飯店](https://www.google.com/maps/search/?api=1&query=%E7%99%BD%E6%A8%BA%E8%8D%98%20%E4%B8%8A%E9%AB%98%E5%9C%B0)自助式早餐
+- [景點] 河童橋 ⟷ 明神橋 健行 — [步道路線](https://www.kamikochi.org/tw/thingstodo/walking)
+- [餐飲] 午餐：[五千尺飯店内河童食堂](https://www.google.com/maps/search/?api=1&query=%E4%BA%94%E5%8D%83%E5%B0%BA%E3%83%9B%E3%83%86%E3%83%AB%20%E6%B2%B3%E7%AB%A5%E9%A3%9F%E5%A0%82%20%E4%B8%8A%E9%AB%98%E5%9C%B0)
+- [餐飲] 下午茶：[TROIS CINQ](https://www.google.com/maps/search/?api=1&query=TROIS%20CINQ%20%E4%B8%8A%E9%AB%98%E5%9C%B0) 蘋果派
+- [景點] 河童橋 ⟷ 大正池 健行 — [步道路線](https://www.kamikochi.org/tw/thingstodo/walking)
 - 17:00 [交通] 搭巴士回平湯溫泉
 - [餐飲] 晚餐：待確認
 
@@ -69,12 +69,12 @@
 標籤: 松本, 諏訪
 
 ## 行程
-- [餐飲] 早餐：平湯之森
+- [餐飲] 早餐：[平湯之森](https://www.google.com/maps/search/?api=1&query=%E5%B9%B3%E6%B9%AF%E3%81%AE%E6%A3%AE)
 - [交通] 前往松本城 — 車程約1小時14分
 - [景點] 松本城觀光 — 周邊四柱神社・中町通・繩手通很好逛
-- [餐飲] 午餐：黑門
+- [餐飲] 午餐：[黑門](https://www.google.com/maps/search/?api=1&query=%E9%BB%92%E9%96%80%20%E6%9D%BE%E6%9C%AC)
 - [景點] 諏訪湖・立石公園看日落 — 車程約50分抵達
-- [餐飲] 晚餐：Holz Shimosuwa — 車程約13分鐘
+- [餐飲] 晚餐：[Holz Shimosuwa](https://www.google.com/maps/search/?api=1&query=Holz%20Shimosuwa) — 車程約13分鐘
 
 ## 住宿
 住宿：民宿「マークヴィラ諏訪湖」— 車程約5分鐘
@@ -87,13 +87,13 @@
 標籤: 移動日
 
 ## 行程
-- [餐飲] 早餐：CLASUWA(9點營業) — 車程約13分鐘
+- [餐飲] 早餐：[CLASUWA](https://www.google.com/maps/search/?api=1&query=CLASUWA%20%E8%AB%8F%E8%A8%AA)(9點營業) — 車程約13分鐘
 - [景點] 湖畔公園 — 走走晃晃
 - [景點] 妻籠宿 — 車程約1小時44分
 - [餐飲] 妻籠宿 — 午餐
 - [景點] 馬籠宿（中山道）
 - [交通] 前往名古屋
-- 19:00 [餐飲] 晚餐：炭燒富士鰻魚　名古屋站太閤口店 — 車程約1小時24分
+- 19:00 [餐飲] 晚餐：[炭燒富士鰻魚　名古屋站太閤口店](https://www.google.com/maps/search/?api=1&query=%E7%82%AD%E7%84%BC%E5%AF%8C%E5%A3%AB%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E9%A7%85%E5%A4%AA%E9%96%A4%E5%8F%A3%E5%BA%97) — 車程約1小時24分
 
 ## 住宿
 住宿：民宿「林的宿」— 車程約17分鐘
@@ -106,10 +106,10 @@
 標籤: 朝市, 水族館
 
 ## 行程
-- [餐飲] 早餐：Yoake(8點營業) — 車程約15分鐘
+- [餐飲] 早餐：[Yoake](https://www.google.com/maps/search/?api=1&query=Yoake%20%E5%90%8D%E5%8F%A4%E5%B1%8B)(8點營業) — 車程約15分鐘
 - [購物] 東別院朝市(10:00~14:00, 吃午餐） — 車程約15分鐘
 - 14:00 [景點] 名古屋水族館(最好是2點前抵達並停好車) — 車程約15分鐘
-- [餐飲] 晚餐：Iroriya いろり屋 名古屋駅前店 — 車程約18分鐘。居酒屋（有雞翅、生魚片)滿足每位需求
+- [餐飲] 晚餐：[Iroriya いろり屋 名古屋駅前店](https://www.google.com/maps/search/?api=1&query=%E3%81%84%E3%82%8D%E3%82%8A%E5%B1%8B%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E9%A7%85%E5%89%8D%E5%BA%97) — 車程約18分鐘。居酒屋（有雞翅、生魚片)滿足每位需求
 
 ## 住宿
 住宿：民宿「林的宿」— 車程約19分鐘
@@ -122,11 +122,11 @@
 標籤: 榮商圈
 
 ## 行程
-- [餐飲] 早餐：Piyorin village — 車程約17分鐘。ㄧ組人先去現場抽牌候位，另一組輕鬆前往
+- [餐飲] 早餐：[Piyorin village](https://www.google.com/maps/search/?api=1&query=Piyorin%20village%20%E5%90%8D%E5%8F%A4%E5%B1%8B) — 車程約17分鐘。ㄧ組人先去現場抽牌候位，另一組輕鬆前往
 - [購物] 榮區大國藥妝及對面的唐吉軻德 — 車程約10分鐘。買藥妝、零食、晴晴許願坐摩天輪(在大國藥妝)
-- [餐飲] 午餐：敘敘苑 — 步行約6分鐘
+- [餐飲] 午餐：[敘敘苑](https://www.google.com/maps/search/?api=1&query=%E5%8F%99%E3%80%85%E8%8B%91%20%E5%90%8D%E5%8F%A4%E5%B1%8B) — 步行約6分鐘
 - [購物] 榮商圈 — 名古屋PARCO（寶可夢中心・CHIIKAWA LAND）・綠洲21・中部電力MIRAI TOWER・LOFT・Montbell・三越
-- [餐飲] 晚餐：札幌螃蟹本家 榮中央分店
+- [餐飲] 晚餐：[札幌螃蟹本家 榮中央分店](https://www.google.com/maps/search/?api=1&query=%E6%9C%AD%E5%B9%8C%E3%81%8B%E3%81%AB%E5%AE%B6%20%E6%A0%84%E4%B8%AD%E5%A4%AE%E5%BA%97)
 
 ## 住宿
 住宿：民宿「林的宿」— 車程約20分鐘
