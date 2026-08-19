@@ -124,9 +124,9 @@
 ## 行程
 - [餐飲] 早餐：[Piyorin village](https://www.google.com/maps/search/?api=1&query=Piyorin%20village%20%E5%90%8D%E5%8F%A4%E5%B1%8B) — 車程約17分鐘。ㄧ組人先去現場抽牌候位，另一組輕鬆前往
 - [購物] 榮區大國藥妝及對面的唐吉軻德 — 車程約10分鐘。買藥妝、零食、晴晴許願坐摩天輪(在大國藥妝)
-- [餐飲] 午餐：[敘敘苑](https://www.google.com/maps/search/?api=1&query=%E5%8F%99%E3%80%85%E8%8B%91%20%E5%90%8D%E5%8F%A4%E5%B1%8B) — 步行約6分鐘
+- [餐飲] 午餐：[敘敘苑](https://maps.app.goo.gl/nAU1pDa545GNDxVr6?g_st=il) — 步行約6分鐘
 - [購物] 榮商圈 — 名古屋PARCO（寶可夢中心・CHIIKAWA LAND）・綠洲21・中部電力MIRAI TOWER・LOFT・Montbell・三越
-- [餐飲] 晚餐：[札幌螃蟹本家 榮中央分店](https://www.google.com/maps/search/?api=1&query=%E6%9C%AD%E5%B9%8C%E3%81%8B%E3%81%AB%E5%AE%B6%20%E6%A0%84%E4%B8%AD%E5%A4%AE%E5%BA%97)
+- [餐飲] 晚餐：[札幌螃蟹本家 榮中央分店](https://maps.app.goo.gl/rtM7eUNp2trC3ZKF9?g_st=il)
 
 ## 住宿
 住宿：民宿「林的宿」— 車程約20分鐘
