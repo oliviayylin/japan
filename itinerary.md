@@ -56,7 +56,7 @@
 - [餐飲] 下午茶：[TROIS CINQ](https://www.google.com/maps/search/?api=1&query=TROIS%20CINQ%20%E4%B8%8A%E9%AB%98%E5%9C%B0) 蘋果派
 - [景點] 河童橋 ⟷ 大正池 健行 — [步道路線](https://www.kamikochi.org/tw/thingstodo/walking)
 - 17:00 [交通] 搭巴士回平湯溫泉
-- [餐飲] 晚餐：待確認
+- [餐飲] 晚餐：平湯街上探險
 
 ## 住宿
 住宿：平湯之森
@@ -90,7 +90,7 @@
 - [餐飲] 早餐：[CLASUWA](https://www.google.com/maps/search/?api=1&query=CLASUWA%20%E8%AB%8F%E8%A8%AA)(9點營業) — 車程約13分鐘
 - [景點] 湖畔公園 — 走走晃晃
 - [景點] 妻籠宿 — 車程約1小時44分
-- [餐飲] 妻籠宿 — 午餐
+- [餐飲] 午餐：[御食事處 音吉](https://maps.app.goo.gl/aLUcJrLDzXerXoPJA?g_st=il)
 - [景點] 馬籠宿（中山道）
 - [交通] 前往名古屋
 - 19:00 [餐飲] 晚餐：[炭燒富士鰻魚　名古屋站太閤口店](https://www.google.com/maps/search/?api=1&query=%E7%82%AD%E7%84%BC%E5%AF%8C%E5%A3%AB%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E9%A7%85%E5%A4%AA%E9%96%A4%E5%8F%A3%E5%BA%97) — 車程約1小時24分
