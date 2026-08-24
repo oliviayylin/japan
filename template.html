@@ -155,6 +155,7 @@
   .geo-mini{background:var(--tag-bg);border-radius:var(--radius);padding:10px;}
   .geo-mini-label{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin:2px 4px 8px;}
   .geo-map{width:100%;height:200px;border-radius:calc(var(--radius) - 4px);overflow:hidden;background:var(--line);}
+  .geo-map-overview{height:260px;}
   .leaflet-container{background:var(--tag-bg);font-family:var(--sans);}
   .leaflet-popup-content{font-size:12.5px;font-weight:700;margin:8px 10px;color:var(--ink);}
   .leaflet-popup-content-wrapper{border-radius:10px;background:var(--paper-raised);color:var(--ink);}
@@ -388,10 +389,10 @@
       if(active) active.scrollIntoView({inline:"center", block:"nearest", behavior:"smooth"});
       window.scrollTo({top:0, behavior:"instant"});
 
-      var d = daysById[id];
-      if(d && d.geo && d.geo.length){
+      var geoPoints = id === "overview" ? data.overviewGeo : (daysById[id] && daysById[id].geo);
+      if(geoPoints && geoPoints.length){
         if(!initedMaps[id]){
-          buildRouteMap(id, d.geo);
+          buildRouteMap(id, geoPoints);
         } else {
           setTimeout(function(){ initedMaps[id].invalidateSize(); }, 50);
         }

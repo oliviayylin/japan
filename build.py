@@ -62,6 +62,7 @@ ICON_EMBED_PX = 64  # source icons are 256x256; downscale before embedding so th
 # neighborhood, so a route line wouldn't add anything.
 DAY_GEO = {
     "day1": [
+        {"label": "桃園機場", "lat": 25.0797, "lng": 121.2342},
         {"label": "名古屋中部機場", "lat": 34.8584, "lng": 136.8054},
         {"label": "高山", "lat": 36.1461, "lng": 137.2521},
     ],
@@ -103,8 +104,18 @@ DAY_GEO = {
     "day8": [
         {"label": "名古屋市區", "lat": 35.1709, "lng": 136.8816},
         {"label": "中部機場", "lat": 34.8584, "lng": 136.8054},
+        {"label": "桃園機場", "lat": 25.0797, "lng": 121.2342},
     ],
 }
+
+DAY_ORDER = ["day1", "day2", "day3", "day4", "day5", "day6", "day7", "day8"]
+
+
+def overview_geo():
+    points = []
+    for did in DAY_ORDER:
+        points.extend(DAY_GEO.get(did, []))
+    return points
 
 
 def _load_icons():
@@ -345,6 +356,8 @@ def render_day_section(d):
     out.append('        </div>')
     out.append(f'        <h2>{d["ttl"]}</h2>')
     out.append('      </div>\n')
+    if d["boarding_pass"]:
+        out.append(render_boarding_pass(d["boarding_pass"]))
     if DAY_GEO.get(d["id"]):
         out.append('      <div class="geo-mini-wrap">')
         out.append('        <div class="geo-mini">')
@@ -352,8 +365,6 @@ def render_day_section(d):
         out.append(f'          <div class="geo-map" id="map-{d["id"]}"></div>')
         out.append('        </div>')
         out.append('      </div>\n')
-    if d["boarding_pass"]:
-        out.append(render_boarding_pass(d["boarding_pass"]))
     if d.get("note"):
         out.append('      <div class="banner">')
         out.append(f'        <div><b>此頁為補充建議</b>{d["note"].split("。", 1)[-1] if "。" in d["note"] else d["note"]}</div>')
@@ -374,6 +385,12 @@ def build_main_html(days):
     parts = []
     parts.append('    <!-- OVERVIEW -->')
     parts.append('    <section class="page" id="overview" role="tabpanel">')
+    parts.append('      <div class="geo-mini-wrap">')
+    parts.append('        <div class="geo-mini">')
+    parts.append('          <p class="geo-mini-label">全程路線</p>')
+    parts.append('          <div class="geo-map geo-map-overview" id="map-overview"></div>')
+    parts.append('        </div>')
+    parts.append('      </div>\n')
     parts.append('      <div class="ov-list" id="ovList"></div>')
     parts.append('    </section>\n')
     parts.append(GEO_SECTION)
@@ -425,7 +442,7 @@ def main():
         for d in days
     ]
 
-    payload = {"mainHTML": main_html, "days": days_meta}
+    payload = {"mainHTML": main_html, "days": days_meta, "overviewGeo": overview_geo()}
     enc, plaintext = encrypt_payload(payload)
     roundtrip = verify_roundtrip(enc, plaintext)
     assert roundtrip["mainHTML"] == main_html
