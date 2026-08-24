@@ -1,6 +1,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>名古屋・高山・上高地 家族旅行</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <style>
   :root{
     --paper:#FFFFFF;
@@ -148,6 +150,15 @@
   .tag-c2{color:var(--stay);background:var(--stay-soft);}
   .tag-c3{color:var(--shop);background:var(--shop-soft);}
   .ov-arrow{color:var(--line);font-size:16px;flex:0 0 auto;}
+
+  .geo-mini-wrap{margin-bottom:2px;}
+  .geo-mini{background:var(--tag-bg);border-radius:var(--radius);padding:10px;}
+  .geo-mini-label{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin:2px 4px 8px;}
+  .geo-map{width:100%;height:200px;border-radius:calc(var(--radius) - 4px);overflow:hidden;background:var(--line);}
+  .leaflet-container{background:var(--tag-bg);font-family:var(--sans);}
+  .leaflet-popup-content{font-size:12.5px;font-weight:700;margin:8px 10px;color:var(--ink);}
+  .leaflet-popup-content-wrapper{border-radius:10px;background:var(--paper-raised);color:var(--ink);}
+  .leaflet-popup-tip{background:var(--paper-raised);}
 
   .geo-card{padding:16px 4px;}
   .geo-svg{width:100%;height:auto;display:block;}
@@ -324,6 +335,39 @@
     var tabsMeta = [{id:"overview", label:"總覽"}, {id:"transit", label:"交通"}];
     days.forEach(function(d,i){ tabsMeta.push({id:d.id, label:"D"+(i+1)}); });
 
+    var daysById = {};
+    days.forEach(function(d){ daysById[d.id] = d; });
+
+    var initedMaps = {};
+    var MAP_ACCENT = getComputedStyle(document.documentElement).getPropertyValue("--accent-strong").trim() || "#3F8C79";
+
+    function mapDot(){
+      return L.divIcon({className:"", iconSize:[12,12], iconAnchor:[6,6],
+        html:'<div style="width:12px;height:12px;border-radius:50%;background:#fff;border:3px solid '+MAP_ACCENT+';box-shadow:0 1px 3px rgba(0,0,0,.3);"></div>'});
+    }
+    function mapEndDot(){
+      return L.divIcon({className:"", iconSize:[14,14], iconAnchor:[7,7],
+        html:'<div style="width:14px;height:14px;border-radius:50%;background:'+MAP_ACCENT+';border:3px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,.3);"></div>'});
+    }
+
+    function buildRouteMap(dayId, points){
+      var el = document.getElementById("map-" + dayId);
+      if(!el || initedMaps[dayId] || !window.L) return;
+      var map = L.map(el, {zoomControl:false, scrollWheelZoom:false});
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom:18, attribution:"&copy; OpenStreetMap"
+      }).addTo(map);
+      L.control.zoom({position:"bottomright"}).addTo(map);
+      var latlngs = points.map(function(p){ return [p.lat, p.lng]; });
+      L.polyline(latlngs, {color:MAP_ACCENT, weight:3, opacity:.8}).addTo(map);
+      points.forEach(function(p,i){
+        L.marker([p.lat, p.lng], {icon: i === points.length-1 ? mapEndDot() : mapDot()})
+          .addTo(map).bindPopup(p.label);
+      });
+      map.fitBounds(L.latLngBounds(latlngs), {padding:[24,24]});
+      initedMaps[dayId] = map;
+    }
+
     tabsMeta.forEach(function(t){
       var btn = document.createElement("button");
       btn.className = "tab";
@@ -343,6 +387,15 @@
       var active = document.querySelector('.tab[data-target="'+id+'"]');
       if(active) active.scrollIntoView({inline:"center", block:"nearest", behavior:"smooth"});
       window.scrollTo({top:0, behavior:"instant"});
+
+      var d = daysById[id];
+      if(d && d.geo && d.geo.length){
+        if(!initedMaps[id]){
+          buildRouteMap(id, d.geo);
+        } else {
+          setTimeout(function(){ initedMaps[id].invalidateSize(); }, 50);
+        }
+      }
     }
 
     var ovList = document.getElementById("ovList");

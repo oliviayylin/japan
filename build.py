@@ -55,6 +55,50 @@ ICON_FILES = {
 ICON_EMBED_PX = 64  # source icons are 256x256; downscale before embedding so the
                      # encrypted payload doesn't carry 47 full-res copies
 
+# Per-day "today's route" mini map — ordered list of real-world waypoints
+# rendered on a Leaflet/OpenStreetMap map on that day's page. Straight lines
+# between points (schematic, not actual road routing). Days with no entry
+# here (or an empty list) get no map — e.g. Day7 is all on foot within one
+# neighborhood, so a route line wouldn't add anything.
+DAY_GEO = {
+    "day1": [
+        {"label": "名古屋中部機場", "lat": 34.8584, "lng": 136.8054},
+        {"label": "高山", "lat": 36.1461, "lng": 137.2521},
+    ],
+    "day2": [
+        {"label": "高山", "lat": 36.1461, "lng": 137.2521},
+        {"label": "平湯溫泉", "lat": 36.1928, "lng": 137.5868},
+        {"label": "上高地", "lat": 36.2513, "lng": 137.6386},
+    ],
+    "day3": [
+        {"label": "白樺莊（上高地）", "lat": 36.2508, "lng": 137.6389},
+        {"label": "明神橋", "lat": 36.2617, "lng": 137.6614},
+        {"label": "河童橋", "lat": 36.2503, "lng": 137.6382},
+        {"label": "大正池", "lat": 36.2436, "lng": 137.6135},
+        {"label": "平湯溫泉", "lat": 36.1928, "lng": 137.5868},
+    ],
+    "day4": [
+        {"label": "平湯溫泉", "lat": 36.1928, "lng": 137.5868},
+        {"label": "松本城", "lat": 36.2381, "lng": 137.9688},
+        {"label": "諏訪湖・立石公園", "lat": 36.0489, "lng": 138.1224},
+        {"label": "諏訪", "lat": 36.0430, "lng": 138.1145},
+    ],
+    "day5": [
+        {"label": "諏訪", "lat": 36.0430, "lng": 138.1145},
+        {"label": "妻籠宿", "lat": 35.5348, "lng": 137.5972},
+        {"label": "馬籠宿", "lat": 35.4949, "lng": 137.5665},
+        {"label": "名古屋", "lat": 35.1709, "lng": 136.8816},
+    ],
+    "day6": [
+        {"label": "東別院朝市", "lat": 35.1553, "lng": 136.9138},
+        {"label": "名古屋水族館", "lat": 35.0868, "lng": 136.8978},
+    ],
+    "day8": [
+        {"label": "名古屋市區", "lat": 35.1709, "lng": 136.8816},
+        {"label": "中部機場", "lat": 34.8584, "lng": 136.8054},
+    ],
+}
+
 
 def _load_icons():
     from PIL import Image
@@ -294,6 +338,13 @@ def render_day_section(d):
     out.append('        </div>')
     out.append(f'        <h2>{d["ttl"]}</h2>')
     out.append('      </div>\n')
+    if DAY_GEO.get(d["id"]):
+        out.append('      <div class="geo-mini-wrap">')
+        out.append('        <div class="geo-mini">')
+        out.append('          <p class="geo-mini-label">今日路線</p>')
+        out.append(f'          <div class="geo-map" id="map-{d["id"]}"></div>')
+        out.append('        </div>')
+        out.append('      </div>\n')
     if d["boarding_pass"]:
         out.append(render_boarding_pass(d["boarding_pass"]))
     if d.get("note"):
@@ -362,7 +413,8 @@ def main():
 
     days_meta = [
         {"id": d["id"], "day": d["day"], "month": d["month"], "wd": d["wd"],
-         "ttl": d["ttl"], "sub": d["sub"], "tags": d["tags"]}
+         "ttl": d["ttl"], "sub": d["sub"], "tags": d["tags"],
+         "geo": DAY_GEO.get(d["id"], [])}
         for d in days
     ]
 
