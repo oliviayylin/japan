@@ -35,9 +35,8 @@
 - 12:00 [餐飲] 高山老街隨意吃 — 步行5分鐘
 - 15:00 [交通] 前往平湯溫泉 — 自駕45分鐘抵達平湯溫泉，導航至 Akandana Parking 停車
 - 16:30 [交通] 平湯溫泉搭巴士,導航至「Akandana parking」停車 — 車程約 30 分鐘 · [巴士時刻表](https://www.nouhibus.co.jp/route_bus/kamikochi-line-en/#timetable)
-- 17:00 [住宿] 抵達上高地，飯店放行李
+- 17:00 [住宿] 抵達上高地，飯店放行李 — 五千尺飯店看montbell出的熊鈴
 - [景點] 隨意走走 — 有體力的人可以去走步道；岳澤濕原看枯木倒影，早晨和黃昏最美 · [步道路線](https://www.kamikochi.org/tw/thingstodo/walking)
-- [購物] 五千尺飯店看montbell出的熊鈴
 - 18:30 [餐飲] 晚餐：[白樺莊飯店](https://www.google.com/maps/search/?api=1&query=%E7%99%BD%E6%A8%BA%E8%8D%98%20%E4%B8%8A%E9%AB%98%E5%9C%B0)西式料理
 
 ## 住宿
@@ -53,7 +52,7 @@
 ## 行程
 - 07:30 [餐飲] 早餐：[白樺莊飯店](https://www.google.com/maps/search/?api=1&query=%E7%99%BD%E6%A8%BA%E8%8D%98%20%E4%B8%8A%E9%AB%98%E5%9C%B0)自助式早餐
 - [景點] 河童橋 ⟷ 明神橋 健行 — [步道路線](https://www.kamikochi.org/tw/thingstodo/walking)
-- [餐飲] 午餐：[五千尺飯店内河童食堂](https://www.google.com/maps/search/?api=1&query=%E4%BA%94%E5%8D%83%E5%B0%BA%E3%83%9B%E3%83%86%E3%83%AB%20%E6%B2%B3%E7%AB%A5%E9%A3%9F%E5%A0%82%20%E4%B8%8A%E9%AB%98%E5%9C%B0)
+- [餐飲] 午餐：[五千尺飯店内河童食堂](https://www.google.com/maps/search/?api=1&query=%E4%BA%94%E5%8D%83%E5%B0%BA%E3%83%9B%E3%83%86%E3%83%AB%20%E6%B2%B3%E7%AB%A5%E9%A3%9F%E5%A0%82%20%E4%B8%8A%E9%AB%98%E5%9C%B0) — 五千尺的布丁比白樺莊的好吃
 - [餐飲] 下午茶：[TROIS CINQ](https://www.google.com/maps/search/?api=1&query=TROIS%20CINQ%20%E4%B8%8A%E9%AB%98%E5%9C%B0) 蘋果派
 - [景點] 河童橋 ⟷ 大正池 健行 — [步道路線](https://www.kamikochi.org/tw/thingstodo/walking)
 - 17:00 [交通] 搭巴士回平湯溫泉
