@@ -34,7 +34,7 @@
 - 10:00 [景點] 和服體驗「中田呉服店」— 步行8分鐘
 - 12:00 [餐飲] 高山老街隨意吃 — 步行5分鐘
 - 15:00 [交通] 前往平湯溫泉 — 自駕45分鐘抵達平湯溫泉，導航至 Akandana Parking 停車
-- 16:30 [交通] 平湯溫泉搭巴士,導航至「Akandana parking」停車 — 車程約 30 分鐘
+- 16:30 [交通] 平湯溫泉搭巴士,導航至「Akandana parking」停車 — 車程約 30 分鐘 · [巴士時刻表](https://www.nouhibus.co.jp/route_bus/kamikochi-line-en/#timetable)
 - 17:00 [住宿] 抵達上高地，飯店放行李
 - [景點] 隨意走走 — 有體力的人可以去走步道；岳澤濕原看枯木倒影，早晨和黃昏最美 · [步道路線](https://www.kamikochi.org/tw/thingstodo/walking)
 - 18:30 [餐飲] 晚餐：[白樺莊飯店](https://www.google.com/maps/search/?api=1&query=%E7%99%BD%E6%A8%BA%E8%8D%98%20%E4%B8%8A%E9%AB%98%E5%9C%B0)西式料理
