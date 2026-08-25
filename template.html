@@ -170,6 +170,14 @@
   .geo-node text{font-family:var(--sans);font-size:12px;font-weight:700;fill:var(--ink);text-anchor:middle;}
   .geo-node-end circle{fill:var(--accent);stroke:var(--accent);}
 
+  .jp-section{display:flex;flex-direction:column;gap:2px;}
+  .jp-section-title{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin:2px 4px 8px;}
+  .jp-list{display:flex;flex-direction:column;}
+  .jp-row{display:flex;align-items:center;justify-content:space-between;gap:14px;border-bottom:1px solid var(--line);padding:12px 2px;}
+  .jp-row:last-child{border-bottom:none;}
+  .jp-zh{font-size:14.5px;font-weight:700;}
+  .jp-romaji{font-family:var(--mono);font-size:13px;color:var(--accent-ink);font-weight:700;}
+
   a{color:var(--accent-ink);}
 
   main[hidden]{display:none;}
@@ -333,8 +341,10 @@
     tabbar.hidden = false;
 
     var days = data.days;
-    var tabsMeta = [{id:"overview", label:"總覽"}, {id:"transit", label:"交通"}];
+    var tabsMeta = [{id:"overview", label:"總覽"}];
     days.forEach(function(d,i){ tabsMeta.push({id:d.id, label:"D"+(i+1)}); });
+    tabsMeta.push({id:"transit", label:"交通"});
+    tabsMeta.push({id:"jphelper", label:"日文小幫手"});
 
     var daysById = {};
     days.forEach(function(d){ daysById[d.id] = d; });
