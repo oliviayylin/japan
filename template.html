@@ -173,10 +173,11 @@
   .jp-section{display:flex;flex-direction:column;gap:2px;}
   .jp-section-title{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin:2px 4px 8px;}
   .jp-list{display:flex;flex-direction:column;}
-  .jp-row{display:flex;align-items:center;justify-content:space-between;gap:14px;border-bottom:1px solid var(--line);padding:12px 2px;}
+  .jp-row{display:flex;align-items:baseline;gap:10px;border-bottom:1px solid var(--line);padding:12px 2px;}
   .jp-row:last-child{border-bottom:none;}
-  .jp-zh{font-size:14.5px;font-weight:700;}
-  .jp-romaji{font-family:var(--mono);font-size:13px;color:var(--accent-ink);font-weight:700;}
+  .jp-zh{font-size:14.5px;font-weight:700;flex:1 1 0;min-width:0;}
+  .jp-jp{font-size:14.5px;font-weight:700;color:var(--ink-soft);flex:1 1 0;min-width:0;}
+  .jp-romaji{font-family:var(--mono);font-size:13px;color:var(--accent-ink);font-weight:700;flex:0 0 auto;text-align:right;}
 
   a{color:var(--accent-ink);}
 

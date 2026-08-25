@@ -348,21 +348,21 @@ GEO_SECTION = '''    <!-- TRANSIT -->
 
 JP_HELPER_SECTIONS = [
     ("地名", [
-        ("名古屋", "Nagoya"),
-        ("中部國際機場", "Chubu Kokusai Kuko"),
-        ("高山", "Takayama"),
-        ("平湯溫泉", "Hirayu Onsen"),
-        ("上高地", "Kamikochi"),
-        ("河童橋", "Kappabashi"),
-        ("明神", "Myojin"),
-        ("大正池", "Taisho-ike"),
-        ("松本", "Matsumoto"),
-        ("松本城", "Matsumoto-jo"),
-        ("諏訪", "Suwa"),
-        ("諏訪湖", "Suwako"),
-        ("妻籠宿", "Tsumago-juku"),
-        ("馬籠宿", "Magome-juku"),
-        ("榮（栄）", "Sakae"),
+        ("名古屋", "名古屋", "Nagoya"),
+        ("中部國際機場", "中部国際空港", "Chubu Kokusai Kuko"),
+        ("高山", "高山", "Takayama"),
+        ("平湯溫泉", "平湯温泉", "Hirayu Onsen"),
+        ("上高地", "上高地", "Kamikochi"),
+        ("河童橋", "河童橋", "Kappabashi"),
+        ("明神", "明神", "Myojin"),
+        ("大正池", "大正池", "Taisho-ike"),
+        ("松本", "松本", "Matsumoto"),
+        ("松本城", "松本城", "Matsumoto-jo"),
+        ("諏訪", "諏訪", "Suwa"),
+        ("諏訪湖", "諏訪湖", "Suwako"),
+        ("妻籠宿", "妻籠宿", "Tsumago-juku"),
+        ("馬籠宿", "馬籠宿", "Magome-juku"),
+        ("榮", "栄", "Sakae"),
     ]),
 ]
 
@@ -374,8 +374,11 @@ def render_jp_helper_section():
         out.append('      <div class="jp-section">')
         out.append(f'        <p class="jp-section-title">{title}</p>')
         out.append('        <div class="jp-list">')
-        for zh, romaji in rows:
-            out.append(f'          <div class="jp-row"><span class="jp-zh">{zh}</span><span class="jp-romaji">{romaji}</span></div>')
+        for zh, jp, romaji in rows:
+            out.append(
+                f'          <div class="jp-row"><span class="jp-zh">{zh}</span>'
+                f'<span class="jp-jp">{jp}</span><span class="jp-romaji">{romaji}</span></div>'
+            )
         out.append('        </div>')
         out.append('      </div>')
     out.append('    </section>\n')
