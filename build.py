@@ -347,7 +347,7 @@ GEO_SECTION = '''    <!-- TRANSIT -->
 
 
 JP_HELPER_SECTIONS = [
-    ("地名", [
+    {"title": "地名", "type": "vocab", "rows": [
         ("名古屋", "なごや", "Nagoya"),
         ("中部国際空港", "ちゅうぶこくさいくうこう", "Chubu Kokusai Kuko"),
         ("高山", "たかやま", "Takayama"),
@@ -363,22 +363,37 @@ JP_HELPER_SECTIONS = [
         ("妻籠宿", "つまごじゅく", "Tsumago-juku"),
         ("馬籠宿", "まごめじゅく", "Magome-juku"),
         ("栄", "さかえ", "Sakae"),
-    ]),
+    ]},
+    {"title": "現場求生句", "type": "sentence", "rows": [
+        ("氷抜きでお願いします", "こおりぬきでおねがいします", "請幫我去冰"),
+        ("お会計お願いします", "おかいけいおねがいします", "麻煩結帳"),
+        ("辛くしないでください", "からくしないでください", "請不要辣"),
+        ("子供用の椅子はありますか", "こどもようのいすはありますか", "請問有兒童座椅嗎"),
+        ("写真を撮ってもいいですか", "しゃしんをとってもいいですか", "可以拍照嗎"),
+    ]},
 ]
 
 
 def render_jp_helper_section():
     out = ['    <!-- JP HELPER -->']
     out.append('    <section class="page" id="jphelper" role="tabpanel" hidden>')
-    for title, rows in JP_HELPER_SECTIONS:
+    for section in JP_HELPER_SECTIONS:
         out.append('      <div class="jp-section">')
-        out.append(f'        <p class="jp-section-title">{title}</p>')
+        out.append(f'        <p class="jp-section-title">{section["title"]}</p>')
         out.append('        <div class="jp-list">')
-        for kanji, kana, romaji in rows:
-            out.append(
-                f'          <div class="jp-row"><span class="jp-kanji">{kanji}<span class="jp-kana">（{kana}）</span></span>'
-                f'<span class="jp-romaji">{romaji}</span></div>'
-            )
+        if section["type"] == "vocab":
+            for kanji, kana, romaji in section["rows"]:
+                out.append(
+                    f'          <div class="jp-row"><span class="jp-kanji">{kanji}<span class="jp-kana">（{kana}）</span></span>'
+                    f'<span class="jp-romaji">{romaji}</span></div>'
+                )
+        else:
+            for kanji, kana, zh in section["rows"]:
+                out.append(
+                    '          <div class="jp-sentence">'
+                    f'<span class="jp-sentence-jp">{kanji}<span class="jp-kana">（{kana}）</span></span>'
+                    f'<span class="jp-sentence-zh">{zh}</span></div>'
+                )
         out.append('        </div>')
         out.append('      </div>')
     out.append('    </section>\n')
