@@ -158,8 +158,18 @@ def linkify(text):
     return LINK_RE.sub(repl, text)
 
 
+HOURS_RE = re.compile(r'\{營業\s*([^}]+)\}\s*$')
+
+
 def parse_event_line(line):
-    m = EVENT_RE.match(line.strip())
+    line = line.strip()
+    hours = None
+    hm = HOURS_RE.search(line)
+    if hm:
+        hours = hm.group(1).strip()
+        line = line[:hm.start()].rstrip()
+
+    m = EVENT_RE.match(line)
     if not m:
         raise ValueError(f"unparsable event line: {line!r}")
     time_val = m.group("time")
@@ -176,7 +186,7 @@ def parse_event_line(line):
     else:
         title = rest.strip()
         sub = None
-    return {"time": time_val, "tag": tag, "title": title, "tbd": tbd, "sub": sub}
+    return {"time": time_val, "tag": tag, "title": title, "tbd": tbd, "sub": sub, "hours": hours}
 
 
 def render_event(ev):
@@ -189,6 +199,8 @@ def render_event(ev):
     if ev["time"]:
         right += f'<span class="ev-time">{ev["time"]}</span>'
     right += f'<span class="ev-title">{title_html}</span>'
+    if ev.get("hours"):
+        right += f'<span class="ev-hours">營業 {ev["hours"]}　訂位 <span class="tbd">待補</span></span>'
     if ev["sub"]:
         right += f'<span class="ev-sub">{linkify(ev["sub"])}</span>'
     parts.append(f'<div class="ev-right">{right}</div>')
