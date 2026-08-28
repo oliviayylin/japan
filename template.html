@@ -102,8 +102,9 @@
   .tab{flex:0 0 auto;padding:7px 15px;border-radius:999px;border:none;background:var(--tag-bg);color:var(--ink-soft);font-family:var(--sans);font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;}
   .tab[aria-selected="true"]{color:#fff;background:var(--accent-strong);font-weight:700;}
   main{padding:18px 18px 40px;max-width:640px;margin:0 auto;}
-  .page{display:flex;flex-direction:column;gap:18px;}
+  .page{display:flex;flex-direction:column;gap:18px;scroll-margin-top:60px;}
   .page[hidden]{display:none;}
+  .page + .page{border-top:1px solid var(--line);padding-top:22px;margin-top:8px;}
   .day-head{display:flex;flex-direction:column;gap:8px;margin-bottom:2px;}
   .day-head-top{display:flex;align-items:center;gap:9px;}
   .date-tag{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--ink);background:var(--tag-bg);border-radius:8px;padding:4px 10px;flex:0 0 auto;}
@@ -342,6 +343,7 @@
     var mainEl = document.getElementById("mainContent");
     mainEl.innerHTML = data.mainHTML;
     mainEl.hidden = false;
+    document.querySelectorAll(".page").forEach(function(p){ p.hidden = false; });
 
     var tabbar = document.getElementById("tabbar");
     tabbar.hidden = false;
@@ -396,23 +398,51 @@
       tabbar.appendChild(btn);
     });
 
-    function showPage(id){
-      document.querySelectorAll(".page").forEach(function(p){ p.hidden = (p.id !== id); });
+    function setActiveTab(id){
       document.querySelectorAll(".tab").forEach(function(b){
         b.setAttribute("aria-selected", b.dataset.target === id ? "true" : "false");
       });
       var active = document.querySelector('.tab[data-target="'+id+'"]');
       if(active) active.scrollIntoView({inline:"center", block:"nearest", behavior:"smooth"});
-      window.scrollTo({top:0, behavior:"instant"});
+    }
 
-      var geoPoints = id === "overview" ? data.overviewGeo : (daysById[id] && daysById[id].geo);
-      if(geoPoints && geoPoints.length){
-        if(!initedMaps[id]){
-          buildRouteMap(id, geoPoints);
-        } else {
-          setTimeout(function(){ initedMaps[id].invalidateSize(); }, 50);
+    function showPage(id){
+      var el = document.getElementById(id);
+      if(el) el.scrollIntoView({behavior:"smooth", block:"start"});
+      setActiveTab(id);
+    }
+
+    function geoPointsFor(id){
+      return id === "overview" ? data.overviewGeo : (daysById[id] && daysById[id].geo);
+    }
+
+    // Lazy-init each day's route map only once it scrolls near the viewport.
+    var mapObserver = ("IntersectionObserver" in window) ? new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(!entry.isIntersecting) return;
+        var geoPoints = geoPointsFor(entry.target.id);
+        if(geoPoints && geoPoints.length && !initedMaps[entry.target.id]){
+          buildRouteMap(entry.target.id, geoPoints);
         }
-      }
+        mapObserver.unobserve(entry.target);
+      });
+    }, {rootMargin:"300px 0px 300px 0px"}) : null;
+
+    document.querySelectorAll(".page").forEach(function(p){
+      var geoPoints = geoPointsFor(p.id);
+      if(!geoPoints || !geoPoints.length) return;
+      if(mapObserver) mapObserver.observe(p);
+      else buildRouteMap(p.id, geoPoints);
+    });
+
+    // Scroll-spy: highlight whichever section's tab as the user scrolls past it.
+    if("IntersectionObserver" in window){
+      var tabObserver = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if(entry.isIntersecting) setActiveTab(entry.target.id);
+        });
+      }, {rootMargin:"-45% 0px -50% 0px", threshold:0});
+      document.querySelectorAll(".page").forEach(function(p){ tabObserver.observe(p); });
     }
 
     var ovList = document.getElementById("ovList");
@@ -456,7 +486,7 @@
       ovList.appendChild(card);
     });
 
-    showPage("overview");
+    setActiveTab("overview");
   }
 
   async function attemptUnlock(){
