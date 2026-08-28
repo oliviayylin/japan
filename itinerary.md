@@ -93,7 +93,7 @@
 - [餐飲] 午餐：[御食事處 音吉](https://maps.app.goo.gl/aLUcJrLDzXerXoPJA?g_st=il)
 - [景點] 馬籠宿（中山道）
 - [交通] 前往名古屋
-- 19:00 [餐飲] 晚餐：[炭燒富士鰻魚　名古屋站太閤口店](https://www.google.com/maps/search/?api=1&query=%E7%82%AD%E7%84%BC%E5%AF%8C%E5%A3%AB%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E9%A7%85%E5%A4%AA%E9%96%A4%E5%8F%A3%E5%BA%97) — 車程約1小時24分
+- 19:00 [餐飲] 晚餐：[炭燒富士鰻魚　天白別邸](https://maps.app.goo.gl/QhTUtVtZqB5tMZbf9?g_st=) — 車程約1小時18分
 
 ## 住宿
 住宿：民宿「林的宿」— 車程約17分鐘

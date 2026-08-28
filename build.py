@@ -142,12 +142,20 @@ EVENT_RE = re.compile(
 )
 
 LINK_RE = re.compile(r'\[([^\]]+)\]\((https?://[^\s)]+)\)')
+GMAPS_URL_RE = re.compile(r'(maps\.app\.goo\.gl|google\.[a-z.]+/maps)')
 
 
 def linkify(text):
     if text is None:
         return text
-    return LINK_RE.sub(r'<a href="\2" target="_blank" rel="noopener">\1</a>', text)
+
+    def repl(m):
+        label, url = m.group(1), m.group(2)
+        if GMAPS_URL_RE.search(url):
+            return f'{label} <a href="{url}" target="_blank" rel="noopener" class="map-link">Map</a>'
+        return f'<a href="{url}" target="_blank" rel="noopener">{label}</a>'
+
+    return LINK_RE.sub(repl, text)
 
 
 def parse_event_line(line):
@@ -368,8 +376,7 @@ JP_HELPER_SECTIONS = [
         ("氷抜きでお願いします", "こおりぬきでおねがいします", "請幫我去冰"),
         ("お会計お願いします", "おかいけいおねがいします", "麻煩結帳"),
         ("辛くしないでください", "からくしないでください", "請不要辣"),
-        ("子供用の椅子はありますか", "こどもようのいすはありますか", "請問有兒童座椅嗎"),
-        ("写真を撮ってもいいですか", "しゃしんをとってもいいですか", "可以拍照嗎"),
+        ("写真を撮っていただけますか", "しゃしんをとっていただけますか", "可以幫我們拍照嗎？"),
     ]},
 ]
 
