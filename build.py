@@ -200,7 +200,7 @@ def render_event(ev):
         right += f'<span class="ev-time">{ev["time"]}</span>'
     right += f'<span class="ev-title">{title_html}</span>'
     if ev.get("hours"):
-        right += f'<span class="ev-hours">營業 {ev["hours"]}　訂位 <span class="tbd">待補</span></span>'
+        right += f'<span class="ev-hours">{ev["hours"]}</span>'
     if ev["sub"]:
         right += f'<span class="ev-sub">{linkify(ev["sub"])}</span>'
     parts.append(f'<div class="ev-right">{right}</div>')

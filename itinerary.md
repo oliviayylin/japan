@@ -17,7 +17,7 @@
 - 11:20 [交通] Times 取車，前往高山 — 抵達後到Access Plaza，全家旁電梯到1F；中途停長良川休息、吃午餐
 - 15:00 [住宿] 民宿放東西、休息
 - [景點] 高山老街閒逛 — 民宿步行約10分鐘
-- [餐飲] 晚餐：[Restaurant Shiki 四季](https://www.google.com/maps/search/?api=1&query=Restaurant%20Shiki%20%E5%9B%9B%E5%AD%A3%20%E9%AB%98%E5%B1%B1%E5%B8%82) (TBD){營業17:30~20:00}
+- [餐飲] 晚餐：[Restaurant Shiki 四季](https://www.google.com/maps/search/?api=1&query=Restaurant%20Shiki%20%E5%9B%9B%E5%AD%A3%20%E9%AB%98%E5%B1%B1%E5%B8%82){營業17:30~20:00}
 
 ## 住宿
 住宿：民宿「和美庵」— 高山市
