@@ -302,11 +302,12 @@ def render_extra_section(extra):
     out.append(f'          <p class="extra-title">{linkify(extra["title"])}</p>')
     out.append('          <div class="extra-list">')
     for row in extra["rows"]:
-        time_html = f'<span class="extra-time">{row["time"]}</span>' if row["time"] else '<span class="extra-time"></span>'
-        sub_html = f'<span class="sub">{linkify(row["sub"])}</span>' if row["sub"] else ''
+        main = linkify(row["ttl"])
+        if row["time"]:
+            main += f' {row["time"]}'
+        sub_html = f'<div class="extra-loc">{linkify(row["sub"])}</div>' if row["sub"] else ''
         out.append(
-            f'            <div class="extra-row">{time_html}'
-            f'<div class="extra-body"><span class="ttl">{linkify(row["ttl"])}</span>{sub_html}</div></div>'
+            f'            <div class="extra-row"><div class="extra-main">{main}</div>{sub_html}</div>'
         )
     out.append('          </div>')
     out.append('        </div>')
