@@ -269,6 +269,51 @@ def render_boarding_pass(bp):
     )
 
 
+EXTRA_RE = re.compile(r'## 補充\n(.+?)(?=\n##|\Z)', re.S)
+EXTRA_ROW_RE = re.compile(r'^-\s*(?:(?P<time>[\d:]+前?)\s+)?(?P<rest>.+)$')
+
+
+def parse_extra_block(text):
+    title = ""
+    rows = []
+    for line in text.strip().split("\n"):
+        line = line.strip()
+        if not line:
+            continue
+        tm = re.match(r'^標題:\s*(.+)$', line)
+        if tm:
+            title = tm.group(1).strip()
+            continue
+        rm = EXTRA_ROW_RE.match(line)
+        if rm:
+            rest = rm.group("rest")
+            if " — " in rest:
+                ttl, sub = rest.split(" — ", 1)
+                ttl, sub = ttl.strip(), sub.strip()
+            else:
+                ttl, sub = rest.strip(), None
+            rows.append({"time": rm.group("time"), "ttl": ttl, "sub": sub})
+    return {"title": title, "rows": rows}
+
+
+def render_extra_section(extra):
+    out = ['      <div class="extra-wrap">']
+    out.append('        <div class="extra-card">')
+    out.append(f'          <p class="extra-title">{linkify(extra["title"])}</p>')
+    out.append('          <div class="extra-list">')
+    for row in extra["rows"]:
+        time_html = f'<span class="extra-time">{row["time"]}</span>' if row["time"] else '<span class="extra-time"></span>'
+        sub_html = f'<span class="sub">{linkify(row["sub"])}</span>' if row["sub"] else ''
+        out.append(
+            f'            <div class="extra-row">{time_html}'
+            f'<div class="extra-body"><span class="ttl">{linkify(row["ttl"])}</span>{sub_html}</div></div>'
+        )
+    out.append('          </div>')
+    out.append('        </div>')
+    out.append('      </div>\n')
+    return "\n".join(out)
+
+
 def parse_markdown(md_text):
     day_blocks = re.split(r'\n---\n', md_text)
     days = []
@@ -309,6 +354,8 @@ def parse_markdown(md_text):
         if stay_m:
             stay = parse_stay_line(stay_m.group(1).strip())
 
+        extras = [parse_extra_block(raw) for raw in EXTRA_RE.findall(block)]
+
         days.append({
             "id": f"day{day_num}",
             "day": day_num2,
@@ -321,6 +368,7 @@ def parse_markdown(md_text):
             "boarding_pass": bp,
             "events": events,
             "stay": stay,
+            "extras": extras,
         })
     return days, transit_block
 
@@ -453,6 +501,8 @@ def render_day_section(d):
         out.append(render_stay(d["stay"]))
     out.append('        </div>')
     out.append('      </div>')
+    for extra in d.get("extras", []):
+        out.append(render_extra_section(extra))
     out.append('    </section>\n')
     return "\n".join(out)
 
