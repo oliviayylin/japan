@@ -74,7 +74,7 @@
 - [景點] 松本城觀光 — 周邊四柱神社・中町通・繩手通很好逛
 - [餐飲] 午餐：[黑門](https://www.google.com/maps/search/?api=1&query=%E9%BB%92%E9%96%80%20%E6%9D%BE%E6%9C%AC){營業 訂位時間：12:30　・　營業時間：11:30~13:30}
 - [景點] 諏訪湖・立石公園看日落 — 車程約50分抵達
-- [餐飲] 晚餐：[薩莉亞 岡谷店](https://www.google.com/maps/search/?api=1&query=%E3%82%B5%E3%82%A4%E3%82%BC%E3%83%AA%E3%83%A4%20%E3%83%AC%E3%82%A4%E3%82%AF%E3%82%A6%E3%82%A9%E3%83%BC%E3%82%AF%E5%B2%A1%E8%B0%B7%E5%BA%97) — 車程約13分鐘，現場候位{營業 營業時間：10:00~21:00}
+- [餐飲] 晚餐：[薩莉亞 岡谷店](https://www.google.com/maps/search/?api=1&query=%E3%82%B5%E3%82%A4%E3%82%BC%E3%83%AA%E3%83%A4%20%E3%83%AC%E3%82%A4%E3%82%AF%E3%82%A6%E3%82%A9%E3%83%BC%E3%82%AF%E5%B2%A1%E8%B0%B7%E5%BA%97) — 車程約13分鐘{營業 現場候位　・　營業時間：10:00~21:00}
 
 ## 住宿
 住宿：民宿「マークヴィラ諏訪湖」— 車程約11分鐘
@@ -90,7 +90,7 @@
 - [餐飲] 早餐：[CLASUWA](https://www.google.com/maps/search/?api=1&query=CLASUWA%20%E8%AB%8F%E8%A8%AA)(9點營業) — 車程約13分鐘
 - [景點] 湖畔公園 — 走走晃晃
 - [景點] 妻籠宿 — 車程約1小時44分
-- [餐飲] 午餐：[御食事處 音吉](https://maps.app.goo.gl/aLUcJrLDzXerXoPJA?g_st=il) — 現場候位{營業 營業時間：11:00~13:30}
+- [餐飲] 午餐：[御食事處 音吉](https://maps.app.goo.gl/aLUcJrLDzXerXoPJA?g_st=il){營業 現場候位　・　營業時間：11:00~13:30}
 - [景點] 馬籠宿（中山道）
 - [交通] 前往名古屋 — 車程約1小時18分
 - 18:30 [餐飲] 晚餐：[炭燒富士鰻魚　白壁別邸](https://maps.app.goo.gl/QhTUtVtZqB5tMZbf9?g_st=){營業 訂位時間：18:30　・　營業時間：17:00~21:00}
