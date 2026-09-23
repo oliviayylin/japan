@@ -17,6 +17,10 @@
     --stay-soft:#DEE4EE;
     --shop:#7D5490;
     --shop-soft:#E9DEEE;
+    --imp:#C85C50;
+    --imp-soft:#F3DEDA;
+    --med:#C0912E;
+    --med-soft:#F2E4C7;
     --tag-bg:#F6F5F2;
     --line:#E6E1D8;
     --shadow:rgba(38,36,33,0.10);
@@ -32,6 +36,8 @@
       --pine:#84AB8C;--pine-soft:rgba(132,171,140,0.14);
       --stay:#93ABD6;--stay-soft:rgba(147,171,214,0.16);
       --shop:#C9A0DE;--shop-soft:rgba(201,160,222,0.16);
+      --imp:#E0857A;--imp-soft:rgba(224,133,122,0.16);
+      --med:#E0B657;--med-soft:rgba(224,182,87,0.16);
       --tag-bg:#2C2E33;
       --line:#34363C;--shadow:rgba(0,0,0,0.4);
     }
@@ -75,18 +81,25 @@
   .item span.txt{font-size:14.5px;line-height:1.4;transition:color .15s;}
   .item input[type="checkbox"]:checked ~ span.txt{color:var(--ink-soft);text-decoration:line-through;text-decoration-thickness:1.5px;}
 
-  .cat[data-cat="imp"] .cat-dot{background:var(--accent-strong);}
+  .cat[data-cat="imp"] .cat-head{background:var(--imp-soft);}
+  .cat[data-cat="cloth"] .cat-head{background:var(--pine-soft);}
+  .cat[data-cat="med"] .cat-head{background:var(--med-soft);}
+  .cat[data-cat="toil"] .cat-head{background:var(--stay-soft);}
+  .cat[data-cat="beauty"] .cat-head{background:var(--shop-soft);}
+  .cat[data-cat="other"] .cat-head{background:var(--tag-bg);}
+
+  .cat[data-cat="imp"] .cat-dot{background:var(--imp);}
   .cat[data-cat="cloth"] .cat-dot{background:var(--pine);}
-  .cat[data-cat="med"] .cat-dot{background:var(--shop);}
+  .cat[data-cat="med"] .cat-dot{background:var(--med);}
   .cat[data-cat="toil"] .cat-dot{background:var(--stay);}
-  .cat[data-cat="beauty"] .cat-dot{background:var(--accent-strong);}
-  .cat[data-cat="other"] .cat-dot{background:var(--pine);}
-  .cat[data-cat="imp"] input[type="checkbox"]{--item-accent:var(--accent-strong);}
+  .cat[data-cat="beauty"] .cat-dot{background:var(--shop);}
+  .cat[data-cat="other"] .cat-dot{background:var(--ink-soft);}
+  .cat[data-cat="imp"] input[type="checkbox"]{--item-accent:var(--imp);}
   .cat[data-cat="cloth"] input[type="checkbox"]{--item-accent:var(--pine);}
-  .cat[data-cat="med"] input[type="checkbox"]{--item-accent:var(--shop);}
+  .cat[data-cat="med"] input[type="checkbox"]{--item-accent:var(--med);}
   .cat[data-cat="toil"] input[type="checkbox"]{--item-accent:var(--stay);}
-  .cat[data-cat="beauty"] input[type="checkbox"]{--item-accent:var(--accent-strong);}
-  .cat[data-cat="other"] input[type="checkbox"]{--item-accent:var(--pine);}
+  .cat[data-cat="beauty"] input[type="checkbox"]{--item-accent:var(--shop);}
+  .cat[data-cat="other"] input[type="checkbox"]{--item-accent:var(--ink-soft);}
 
   footer{margin-top:24px;display:flex;justify-content:center;}
   .reset-btn{background:none;border:none;color:var(--ink-soft);font-family:var(--sans);font-size:12px;text-decoration:underline;cursor:pointer;padding:6px;}
@@ -119,8 +132,8 @@
   var DATA = [
     {id:"imp", name:"重要", items:[
       ["imp-passport","護照"],
-      ["imp-tw-license","台灣駕照"],
       ["imp-yen","日幣"],
+      ["imp-tw-license","台灣駕照"],
       ["imp-license","駕照譯本"],
     ]},
     {id:"cloth", name:"衣服・鞋子・防曬保暖", items:[
@@ -130,6 +143,7 @@
       ["cloth-socks","襪子（7雙）"],
       ["cloth-midlayer","保暖中層衣／刷毛外套（上高地清晨較冷）"],
       ["cloth-windjacket","防風保暖外套"],
+      ["cloth-beanie","毛帽"],
       ["cloth-gloves","保暖手套"],
       ["cloth-scarf","圍巾"],
       ["cloth-hat","帽子（遮陽帽）"],

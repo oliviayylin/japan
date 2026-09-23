@@ -596,6 +596,7 @@
     photoModal.style.background = "";
     photoModalImg.src = src;
     photoModal.hidden = false;
+    document.body.style.overflow = "hidden";
   }
   function closePhotoModal(){
     photoModal.hidden = true;
@@ -603,6 +604,7 @@
     photoModalImg.style.transition = "";
     photoModalImg.style.transform = "";
     photoModal.style.background = "";
+    document.body.style.overflow = "";
   }
   document.getElementById("mainContent").addEventListener("click", function(e){
     var thumb = e.target.closest(".ev-thumb");
@@ -628,10 +630,11 @@
   }, {passive:true});
   photoModal.addEventListener("touchmove", function(e){
     if(!dragging || dragStartY === null) return;
+    e.preventDefault();
     dragDy = Math.max(0, e.touches[0].clientY - dragStartY);
     photoModalImg.style.transform = "translateY(" + dragDy + "px)";
     photoModal.style.background = "rgba(10,10,10," + Math.max(0.88 - dragDy / 500, 0.3) + ")";
-  }, {passive:true});
+  }, {passive:false});
   function endDrag(){
     if(!dragging) return;
     dragging = false;
