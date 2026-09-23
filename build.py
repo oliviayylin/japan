@@ -179,6 +179,9 @@ EVENT_PHOTO_RULES = {
         ("敘敘苑", "D7-敘敘苑.jpg"),
         ("札幌螃蟹本家", "D7-札幌螃蟹本家.jpg"),
     ],
+    "day8": [
+        ("客美多", "D8-客美多.jpg"),
+    ],
 }
 
 STAY_PHOTO_RULES = {
