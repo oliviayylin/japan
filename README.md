@@ -88,6 +88,12 @@ CSS 全是明文，直接改 `template.html` 的 `<style>` 就好，不用碰加
 
 單色圓潤剪影風格，每個都是 `fill="currentColor"`，顏色由外層 `.icon-sight` / `.icon-food` / `.icon-stay` / `.icon-shop` / `.icon-move` 這幾個 class 決定。圖示的 SVG 定義集中在 `build.py` 的 `ICONS` 字典裡，改一次全站套用（不用像純手改 html 那樣要找到每一處重複貼上的地方替換）。
 
+## 行程照片（單擊縮圖看大圖）
+
+「景點」「餐飲」「住宿」的行程項目最右邊，部分會有一個小縮圖，單擊會彈出該地點的代表性照片（單擊 X 或背景關閉）。照片來源檔案放在專案外層的 `../候選照片/` 資料夾（檔名格式 `D{天數}-地點名稱.jpg`），`build.py` 執行時會自動讀取、縮圖並嵌入頁面（縮圖 120px 方形裁切、大圖最長邊限制 1080px，都轉成 JPEG 壓縮）。
+
+哪個行程項目對應哪張照片，是寫在 `build.py` 的 `EVENT_PHOTO_RULES`／`STAY_PHOTO_RULES` 字典裡（依 day id + 標題關鍵字比對），不是從 `itinerary.md` 動態產生——因為「該用哪張照片代表這個地點」是編輯判斷，不適合造一套 markdown 語法。要新增/更換照片：把檔案放進 `候選照片/` 資料夾，再到 `build.py` 對應的 day 裡加一筆 `("關鍵字", "檔名")`。沒有配對到照片的行程項目就不會顯示縮圖。
+
 ## 已知限制
 
 - 「記住這台裝置」原本用的是 `window.storage`（claude.ai artifact 平台專屬 API），但這個能力不在 Artifact 環境開放的 capability 清單裡，導致在 claude.ai 上這個功能會靜默失效。改用 GitHub Pages 部署之後已經改成瀏覽器原生的 `localStorage`（一般網域不受 Artifact 沙盒限制），實測可以正常記住 14 天。**這代表 claude.ai Artifact 版本跟 GitHub Pages 版本的「記住裝置」行為不一樣**：Artifact 版本每次都要重新輸入密碼，GitHub Pages 版本才會真的記住。

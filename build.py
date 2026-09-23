@@ -29,6 +29,7 @@ TEMPLATE_PATH = os.path.join(HERE, "template.html")
 OUTPUT_PATH = os.path.join(HERE, "2026名古屋上高地旅行.html")
 HERO_IMG_PATH = os.path.join(HERE, "..", "ak0604202041夏の穂高岳と河童橋・８月（上高地）.webp")
 ICONS_DIR = os.path.join(HERE, "..", "icons")
+PHOTOS_DIR = os.path.join(HERE, "..", "候選照片")
 
 SECRET_PATH = os.path.join(HERE, ".secret_password")
 if not os.path.exists(SECRET_PATH):
@@ -137,6 +138,111 @@ def _load_icons():
 
 ICONS = _load_icons()
 
+# Representative photo, click-to-enlarge, per event/stay row. Matched by a
+# distinctive substring against the event's raw title text (before linkify),
+# checked in order — first match wins. Not itinerary.md-driven (like DAY_GEO)
+# because picking "the" photo for a place is an editorial judgment call, not
+# something worth inventing markdown syntax for. Files live in ../候選照片/.
+EVENT_PHOTO_RULES = {
+    "day1": [("高山老街", "D1-高山老街.jpg"), ("HIDASHI", "D1-HIDASHI.jpg")],
+    "day2": [
+        ("Brand New Day Coffee", "D2-BrandNewDayCoffee.jpg"),
+        ("中田呉服店", "D2-中田呉服店.png"),
+        ("白樺莊飯店", "D2-白樺莊飯店.jpg"),
+    ],
+    "day3": [
+        ("白樺莊飯店", "D2-白樺莊飯店.jpg"),
+        ("明神橋", "D3-河童橋.jpg"),
+        ("大正池", "D3-大正池.jpg"),
+        ("五千尺", "D3-五千尺飯店河童食堂.jpg"),
+        ("TROIS CINQ", "D3-TROISCINQ.jpg"),
+    ],
+    "day4": [
+        ("平湯之森", "D3-平湯之森.jpg"),
+        ("松本城", "D4-松本城.jpg"),
+        ("黑門", "D4-黑門.jpg"),
+        ("立石公園", "D4-立石公園.jpg"),
+    ],
+    "day5": [
+        ("CLASUWA", "D5-CLASUWA.jpg"),
+        ("妻籠宿", "D5-妻籠宿.jpg"),
+        ("音吉", "D5-御食事處音吉.jpg"),
+        ("馬籠宿", "D5-馬籠宿.jpg"),
+        ("白壁別邸", "D5-炭燒富士鰻魚白壁別邸.jpg"),
+    ],
+    "day6": [
+        ("Yoake", "D6-Yoake.jpg"),
+        ("名古屋水族館", "D6-名古屋水族館.jpg"),
+        ("Iroriya", "D6-Iroriya.jpg"),
+    ],
+    "day7": [
+        ("Piyorin", "D7-Piyorinvillage.webp"),
+        ("敘敘苑", "D7-敘敘苑.jpg"),
+        ("札幌螃蟹本家", "D7-札幌螃蟹本家.jpg"),
+    ],
+}
+
+STAY_PHOTO_RULES = {
+    "day2": "D2-白樺莊飯店.jpg",
+    "day3": "D3-平湯之森.jpg",
+    "day4": "D4-民宿マークヴィラ諏訪湖.jpg",
+}
+
+PHOTO_THUMB_PX = 120
+PHOTO_FULL_MAX_PX = 1080
+
+
+def _load_photos():
+    from PIL import Image, ImageOps
+    import io
+
+    filenames = set(STAY_PHOTO_RULES.values())
+    for rules in EVENT_PHOTO_RULES.values():
+        filenames.update(fname for _, fname in rules)
+
+    photos = {}
+    for filename in filenames:
+        path = os.path.join(PHOTOS_DIR, filename)
+        img = Image.open(path)
+        if img.mode != "RGB":
+            img = img.convert("RGB")
+
+        thumb = ImageOps.fit(img, (PHOTO_THUMB_PX, PHOTO_THUMB_PX), Image.LANCZOS)
+        thumb_buf = io.BytesIO()
+        thumb.save(thumb_buf, format="JPEG", quality=72, optimize=True)
+        thumb_b64 = base64.b64encode(thumb_buf.getvalue()).decode()
+
+        full = img.copy()
+        if max(full.size) > PHOTO_FULL_MAX_PX:
+            full.thumbnail((PHOTO_FULL_MAX_PX, PHOTO_FULL_MAX_PX), Image.LANCZOS)
+        full_buf = io.BytesIO()
+        full.save(full_buf, format="JPEG", quality=76, optimize=True)
+        full_b64 = base64.b64encode(full_buf.getvalue()).decode()
+
+        photos[filename] = {
+            "thumb": f"data:image/jpeg;base64,{thumb_b64}",
+            "full": f"data:image/jpeg;base64,{full_b64}",
+        }
+    return photos
+
+
+PHOTOS = _load_photos()
+
+
+def find_event_photo(day_id, title):
+    for substr, filename in EVENT_PHOTO_RULES.get(day_id, []):
+        if substr in title:
+            return PHOTOS.get(filename)
+    return None
+
+
+def render_photo_thumb(photo):
+    return (
+        f'<button type="button" class="ev-thumb" data-full="{photo["full"]}">'
+        f'<img src="{photo["thumb"]}" alt="" /></button>'
+    )
+
+
 EVENT_RE = re.compile(
     r'^- (?:(?P<time>[\d:–\-]+) )?\[(?P<tag>[^\]]+)\] (?P<rest>.+)$'
 )
@@ -189,7 +295,7 @@ def parse_event_line(line):
     return {"time": time_val, "tag": tag, "title": title, "tbd": tbd, "sub": sub, "hours": hours}
 
 
-def render_event(ev):
+def render_event(ev, day_id):
     icon_class, icon_svg = ICONS[ev["tag"]]
     title_html = linkify(ev["title"])
     if ev["tbd"]:
@@ -204,6 +310,9 @@ def render_event(ev):
     if ev["sub"]:
         right += f'<span class="ev-sub">{linkify(ev["sub"])}</span>'
     parts.append(f'<div class="ev-right">{right}</div>')
+    photo = find_event_photo(day_id, ev["title"])
+    if photo:
+        parts.append(render_photo_thumb(photo))
     return f'          <div class="ev">{"".join(parts)}</div>'
 
 
@@ -224,7 +333,7 @@ def parse_stay_line(line):
     return {"name": name, "tbd": tbd, "note": note}
 
 
-def render_stay(stay):
+def render_stay(stay, day_id):
     icon_class, icon_svg = ICONS["住宿"]
     if stay["name"]:
         title_html = linkify(stay["name"])
@@ -236,9 +345,13 @@ def render_stay(stay):
     right = f'<span class="ev-title">{title_html}</span>'
     if stay["note"]:
         right += f'<span class="ev-sub">{linkify(stay["note"])}</span>'
+    thumb_html = ""
+    photo_filename = STAY_PHOTO_RULES.get(day_id)
+    if photo_filename and photo_filename in PHOTOS:
+        thumb_html = render_photo_thumb(PHOTOS[photo_filename])
     return (
         f'          <div class="ev"><div class="ev-icon {icon_class}">{icon_svg}</div>'
-        f'<div class="ev-right">{right}</div></div>'
+        f'<div class="ev-right">{right}</div>{thumb_html}</div>'
     )
 
 
@@ -497,9 +610,9 @@ def render_day_section(d):
     out.append('      <div class="card">')
     out.append('        <div class="day-flow">')
     for ev in d["events"]:
-        out.append(render_event(ev))
+        out.append(render_event(ev, d["id"]))
     if d["stay"]:
-        out.append(render_stay(d["stay"]))
+        out.append(render_stay(d["stay"], d["id"]))
     out.append('        </div>')
     out.append('      </div>')
     for extra in d.get("extras", []):

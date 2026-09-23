@@ -126,7 +126,7 @@
 
   /* Unified day flow: events + connectors */
   .day-flow{display:flex;flex-direction:column;}
-  .ev{display:grid;grid-template-columns:56px 1fr;column-gap:14px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line);}
+  .ev{display:grid;grid-template-columns:56px 1fr auto;column-gap:14px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line);}
   .ev:last-child{border-bottom:none;}
   .ev-icon{width:56px;height:56px;border-radius:14px;background:var(--tag-bg);display:flex;align-items:center;justify-content:center;flex:0 0 auto;}
   .ev-icon img{width:28px;height:28px;object-fit:contain;}
@@ -136,6 +136,15 @@
   .tbd{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--accent-ink);border:1px dashed var(--accent);border-radius:6px;padding:1px 7px;letter-spacing:.04em;}
   .ev-hours{font-family:var(--mono);font-size:13px;font-weight:400;color:var(--accent-ink);}
   .ev-sub{font-size:14px;color:var(--ink-soft);}
+  .ev-thumb{grid-column:3;width:48px;height:48px;border-radius:10px;border:none;padding:0;background:var(--tag-bg);flex:0 0 auto;cursor:pointer;overflow:hidden;-webkit-tap-highlight-color:transparent;}
+  .ev-thumb img{width:100%;height:100%;object-fit:cover;display:block;}
+  .ev-thumb:active{opacity:.8;}
+
+  .photo-modal{position:fixed;inset:0;z-index:60;background:rgba(10,10,10,.88);display:flex;align-items:center;justify-content:center;padding:28px;}
+  .photo-modal[hidden]{display:none;}
+  .photo-modal img{max-width:100%;max-height:100%;border-radius:12px;object-fit:contain;box-shadow:0 12px 40px rgba(0,0,0,.5);}
+  .photo-modal-close{position:absolute;top:18px;right:18px;width:40px;height:40px;border-radius:50%;border:none;background:rgba(255,255,255,.16);color:#fff;font-size:22px;line-height:1;cursor:pointer;font-family:var(--sans);}
+  .photo-modal-close:active{background:rgba(255,255,255,.28);}
 
   .banner{display:flex;gap:10px;align-items:flex-start;border:none;background:var(--accent-soft);border-radius:var(--radius);padding:12px 14px;font-size:14.5px;line-height:1.6;color:var(--accent-ink);}
   .banner b{display:block;font-size:14.5px;margin-bottom:2px;}
@@ -245,6 +254,11 @@
 
   <div class="clear-session-wrap" id="clearSessionWrap" hidden>
     <button type="button" class="clear-session-btn" id="clearSessionBtn">清除本機記住的解鎖狀態</button>
+  </div>
+
+  <div class="photo-modal" id="photoModal" hidden>
+    <button type="button" class="photo-modal-close" id="photoModalClose" aria-label="關閉">&times;</button>
+    <img id="photoModalImg" src="" alt="" />
   </div>
 
 </div>
@@ -573,6 +587,30 @@
       window.location.reload();
     });
   }
+
+  var photoModal = document.getElementById("photoModal");
+  var photoModalImg = document.getElementById("photoModalImg");
+  function openPhotoModal(src){
+    photoModalImg.src = src;
+    photoModal.hidden = false;
+  }
+  function closePhotoModal(){
+    photoModal.hidden = true;
+    photoModalImg.src = "";
+  }
+  document.getElementById("mainContent").addEventListener("click", function(e){
+    var thumb = e.target.closest(".ev-thumb");
+    if(!thumb) return;
+    var full = thumb.getAttribute("data-full");
+    if(full) openPhotoModal(full);
+  });
+  document.getElementById("photoModalClose").addEventListener("click", closePhotoModal);
+  photoModal.addEventListener("click", function(e){
+    if(e.target === photoModal) closePhotoModal();
+  });
+  document.addEventListener("keydown", function(e){
+    if(e.key === "Escape" && !photoModal.hidden) closePhotoModal();
+  });
 
   init();
 })();
