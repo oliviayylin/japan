@@ -52,9 +52,6 @@
   .progress-track{height:8px;border-radius:99px;background:var(--line);overflow:hidden;}
   .progress-fill{height:100%;border-radius:99px;background:var(--accent-strong);transition:width .35s ease;width:0%;}
 
-  .banner{display:flex;gap:10px;align-items:flex-start;background:var(--accent-soft);border-radius:var(--radius);padding:12px 14px;font-size:13px;line-height:1.6;color:var(--accent-ink);margin-top:14px;}
-  .banner b{display:block;font-size:13px;margin-bottom:2px;}
-
   .cats{display:flex;flex-direction:column;gap:16px;margin-top:20px;}
   .cat{background:var(--paper-raised);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:0 1px 6px var(--shadow);}
   .cat-head{display:flex;align-items:center;gap:9px;padding:12px 16px;border-bottom:1px solid var(--line);}
@@ -110,10 +107,6 @@
     <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
   </div>
 
-  <div class="banner">
-    <div><b>特別提醒</b>底片相機別忘了帶；行動電源這次是新買的，也別漏了。</div>
-  </div>
-
   <div class="cats" id="cats"></div>
 
   <footer>
@@ -126,17 +119,18 @@
   var DATA = [
     {id:"imp", name:"重要", items:[
       ["imp-passport","護照"],
+      ["imp-tw-license","台灣駕照"],
       ["imp-yen","日幣"],
       ["imp-license","駕照譯本"],
     ]},
     {id:"cloth", name:"衣服・鞋子・防曬保暖", items:[
-      ["cloth-outfits","外出衣服（6天，建議洋蔥式穿搭）"],
-      ["cloth-underwear","內衣褲（6天）"],
+      ["cloth-outfits","外出衣服（7套，建議洋蔥式穿搭）"],
+      ["cloth-underwear","內衣褲（7天）"],
       ["cloth-pajamas","睡衣睡褲"],
-      ["cloth-socks","襪子（6雙）"],
+      ["cloth-socks","襪子（7雙）"],
       ["cloth-midlayer","保暖中層衣／刷毛外套（上高地清晨較冷）"],
       ["cloth-windjacket","防風保暖外套"],
-      ["cloth-gloves","保暖手套（早晚用，非雪用手套）"],
+      ["cloth-gloves","保暖手套"],
       ["cloth-scarf","圍巾"],
       ["cloth-hat","帽子（遮陽帽）"],
       ["cloth-sunglasses","墨鏡"],
@@ -146,6 +140,8 @@
     ]},
     {id:"med", name:"藥品・隨身用品", items:[
       ["med-headache","頭痛藥"],
+      ["med-thyroid","甲亢的藥"],
+      ["med-stomach","胃藥"],
       ["med-probiotics","益生菌"],
       ["med-supplements","保健食品"],
       ["med-bandaid","OK蹦"],
@@ -164,12 +160,17 @@
       ["beauty-cottonpad","化妝棉"],
       ["beauty-facecloth","洗臉巾"],
       ["beauty-toner","化妝水"],
+      ["beauty-mist","老公的噴霧水"],
+      ["beauty-facemask","我的面膜"],
       ["beauty-serum","精華液"],
       ["beauty-lotion","乳液"],
       ["beauty-b5","B5 乳霜"],
       ["beauty-primer","隔離霜"],
+      ["beauty-makeupbase","妝前乳"],
+      ["beauty-foundation","粉底液"],
+      ["beauty-foundationbrush","粉底刷"],
       ["beauty-concealer","遮瑕膏"],
-      ["beauty-cushion","氣墊粉餅"],
+      ["beauty-pressedpowder","蜜粉餅"],
       ["beauty-lipstick","口紅"],
       ["beauty-eyebrow","眉粉"],
       ["beauty-comb","梳子"],
@@ -177,15 +178,18 @@
     ]},
     {id:"other", name:"其他", items:[
       ["other-camera","底片相機"],
-      ["other-powerbank","行動電源（新買的）"],
+      ["other-powerbank","行動電源"],
       ["other-dryer","吹風機？"],
-      ["other-tissue","面紙"],
+      ["other-tissue","隨身衛生紙"],
       ["other-wetwipes","濕紙巾"],
       ["other-mask","口罩"],
       ["other-nailclipper","指甲剪"],
       ["other-cottonswab","棉花棒"],
       ["other-bottle","水壺"],
       ["other-ipad","iPad"],
+      ["other-ereader","電子書閱讀器"],
+      ["other-headphones","耳機"],
+      ["other-coffeebags","濾掛咖啡包"],
       ["other-cables","充電線（手機、iPad、行動電源、Apple Watch）"],
       ["other-pen","筆"],
     ]},
