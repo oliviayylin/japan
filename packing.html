@@ -1,0 +1,284 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>行李打包清單</title>
+<style>
+  :root{
+    --paper:#FFFFFF;
+    --paper-raised:#FFFFFF;
+    --ink:#262421;
+    --ink-soft:#7A7266;
+    --accent:#5CAE9C;
+    --accent-ink:#34655A;
+    --accent-soft:#CCE3DE;
+    --accent-strong:#3F8C79;
+    --pine:#3F6350;
+    --pine-soft:#DCE6DD;
+    --stay:#3C5578;
+    --stay-soft:#DEE4EE;
+    --shop:#7D5490;
+    --shop-soft:#E9DEEE;
+    --tag-bg:#F6F5F2;
+    --line:#E6E1D8;
+    --shadow:rgba(38,36,33,0.10);
+    --radius:16px;
+    --sans:-apple-system,BlinkMacSystemFont,"PingFang TC","Hiragino Sans","Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif;
+    --mono:ui-monospace,"SF Mono","Menlo","Consolas",monospace;
+    color-scheme:light dark;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --paper:#1B1C20;--paper-raised:#232429;--ink:#ECE6D8;--ink-soft:#9C9384;
+      --accent:#93C8BC;--accent-ink:#C5DDD8;--accent-soft:rgba(92,174,156,0.18);--accent-strong:#4FA090;
+      --pine:#84AB8C;--pine-soft:rgba(132,171,140,0.14);
+      --stay:#93ABD6;--stay-soft:rgba(147,171,214,0.16);
+      --shop:#C9A0DE;--shop-soft:rgba(201,160,222,0.16);
+      --tag-bg:#2C2E33;
+      --line:#34363C;--shadow:rgba(0,0,0,0.4);
+    }
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);}
+  .wrap{max-width:560px;margin:0 auto;padding:20px 18px 56px;}
+
+  .eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);margin:0 0 8px;}
+  h1{font-size:24px;font-weight:800;margin:0 0 6px;text-wrap:balance;}
+  .sub{font-size:13px;color:var(--ink-soft);margin:0 0 18px;line-height:1.6;}
+
+  .progress-card{background:var(--tag-bg);border-radius:var(--radius);padding:16px 16px;}
+  .progress-top{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:9px;}
+  .progress-count{font-weight:800;font-size:15px;}
+  .progress-count b{font-family:var(--mono);font-size:18px;}
+  .progress-pct{font-family:var(--mono);font-size:12.5px;color:var(--ink-soft);}
+  .progress-track{height:8px;border-radius:99px;background:var(--line);overflow:hidden;}
+  .progress-fill{height:100%;border-radius:99px;background:var(--accent-strong);transition:width .35s ease;width:0%;}
+
+  .banner{display:flex;gap:10px;align-items:flex-start;background:var(--accent-soft);border-radius:var(--radius);padding:12px 14px;font-size:13px;line-height:1.6;color:var(--accent-ink);margin-top:14px;}
+  .banner b{display:block;font-size:13px;margin-bottom:2px;}
+
+  .cats{display:flex;flex-direction:column;gap:16px;margin-top:20px;}
+  .cat{background:var(--paper-raised);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:0 1px 6px var(--shadow);}
+  .cat-head{display:flex;align-items:center;gap:9px;padding:12px 16px;border-bottom:1px solid var(--line);}
+  .cat-dot{width:9px;height:9px;border-radius:50%;flex:0 0 auto;}
+  .cat-name{font-weight:800;font-size:15px;flex:1;}
+  .cat-count{font-family:var(--mono);font-size:11.5px;color:var(--ink-soft);}
+
+  .items{display:flex;flex-direction:column;}
+  .item + .item{border-top:1px solid var(--line);}
+  .item label{display:flex;align-items:center;gap:12px;width:100%;padding:11px 16px;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+  .item input[type="checkbox"]{
+    appearance:none;-webkit-appearance:none;width:20px;height:20px;border-radius:6px;
+    border:2px solid var(--ink-soft);background:var(--paper-raised);flex:0 0 auto;cursor:pointer;
+    position:relative;transition:background .15s,border-color .15s;opacity:.7;
+  }
+  .item input[type="checkbox"]:checked{background:var(--item-accent,var(--accent-strong));border-color:var(--item-accent,var(--accent-strong));opacity:1;}
+  .item input[type="checkbox"]:checked::after{
+    content:"";position:absolute;left:5.5px;top:2px;width:5px;height:9px;
+    border:solid #fff;border-width:0 2.5px 2.5px 0;transform:rotate(40deg);
+  }
+  .item span.txt{font-size:14.5px;line-height:1.4;transition:color .15s;}
+  .item input[type="checkbox"]:checked ~ span.txt{color:var(--ink-soft);text-decoration:line-through;text-decoration-thickness:1.5px;}
+
+  .cat[data-cat="imp"] .cat-dot{background:var(--accent-strong);}
+  .cat[data-cat="cloth"] .cat-dot{background:var(--pine);}
+  .cat[data-cat="med"] .cat-dot{background:var(--shop);}
+  .cat[data-cat="toil"] .cat-dot{background:var(--stay);}
+  .cat[data-cat="beauty"] .cat-dot{background:var(--accent-strong);}
+  .cat[data-cat="other"] .cat-dot{background:var(--pine);}
+  .cat[data-cat="imp"] input[type="checkbox"]{--item-accent:var(--accent-strong);}
+  .cat[data-cat="cloth"] input[type="checkbox"]{--item-accent:var(--pine);}
+  .cat[data-cat="med"] input[type="checkbox"]{--item-accent:var(--shop);}
+  .cat[data-cat="toil"] input[type="checkbox"]{--item-accent:var(--stay);}
+  .cat[data-cat="beauty"] input[type="checkbox"]{--item-accent:var(--accent-strong);}
+  .cat[data-cat="other"] input[type="checkbox"]{--item-accent:var(--pine);}
+
+  footer{margin-top:24px;display:flex;justify-content:center;}
+  .reset-btn{background:none;border:none;color:var(--ink-soft);font-family:var(--sans);font-size:12px;text-decoration:underline;cursor:pointer;padding:6px;}
+</style>
+
+<div class="wrap">
+  <header>
+    <p class="eyebrow">名古屋・高山・上高地　10/3–10/10</p>
+    <h1>行李打包清單</h1>
+    <p class="sub">點項目前的方框勾選，已打包會自動記住（只存在這台裝置、這個瀏覽器裡）。</p>
+  </header>
+
+  <div class="progress-card">
+    <div class="progress-top">
+      <span class="progress-count"><b id="doneCount">0</b> / <span id="totalCount">0</span> 已打包</span>
+      <span class="progress-pct" id="pctLabel">0%</span>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  </div>
+
+  <div class="banner">
+    <div><b>特別提醒</b>底片相機別忘了帶；行動電源這次是新買的，也別漏了。</div>
+  </div>
+
+  <div class="cats" id="cats"></div>
+
+  <footer>
+    <button type="button" class="reset-btn" id="resetBtn">清除全部勾選</button>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var DATA = [
+    {id:"imp", name:"重要", items:[
+      ["imp-passport","護照"],
+      ["imp-yen","日幣"],
+      ["imp-license","駕照譯本"],
+    ]},
+    {id:"cloth", name:"衣服・鞋子・防曬保暖", items:[
+      ["cloth-outfits","外出衣服（6天，建議洋蔥式穿搭）"],
+      ["cloth-underwear","內衣褲（6天）"],
+      ["cloth-pajamas","睡衣睡褲"],
+      ["cloth-socks","襪子（6雙）"],
+      ["cloth-midlayer","保暖中層衣／刷毛外套（上高地清晨較冷）"],
+      ["cloth-windjacket","防風保暖外套"],
+      ["cloth-gloves","保暖手套（早晚用，非雪用手套）"],
+      ["cloth-scarf","圍巾"],
+      ["cloth-hat","帽子（遮陽帽）"],
+      ["cloth-sunglasses","墨鏡"],
+      ["cloth-sunscreen","防曬乳液"],
+      ["cloth-hikingshoes","好走的健走鞋／登山鞋（河童橋・明神橋・大正池步道）"],
+      ["cloth-raingear","輕便雨衣／雨具（山區天氣多變）"],
+    ]},
+    {id:"med", name:"藥品・隨身用品", items:[
+      ["med-headache","頭痛藥"],
+      ["med-probiotics","益生菌"],
+      ["med-supplements","保健食品"],
+      ["med-bandaid","OK蹦"],
+      ["med-handcream","護手霜"],
+      ["med-lipbalm","護唇膏"],
+      ["med-alcohol","酒精"],
+    ]},
+    {id:"toil", name:"盥洗", items:[
+      ["toil-toothbrush","牙刷牙膏"],
+      ["toil-floss","牙線"],
+      ["toil-retainer","牙套"],
+    ]},
+    {id:"beauty", name:"保養化妝", items:[
+      ["beauty-remover","卸妝棉"],
+      ["beauty-cleanser","洗面乳"],
+      ["beauty-cottonpad","化妝棉"],
+      ["beauty-facecloth","洗臉巾"],
+      ["beauty-toner","化妝水"],
+      ["beauty-serum","精華液"],
+      ["beauty-lotion","乳液"],
+      ["beauty-b5","B5 乳霜"],
+      ["beauty-primer","隔離霜"],
+      ["beauty-concealer","遮瑕膏"],
+      ["beauty-cushion","氣墊粉餅"],
+      ["beauty-lipstick","口紅"],
+      ["beauty-eyebrow","眉粉"],
+      ["beauty-comb","梳子"],
+      ["beauty-clip","瀏海夾"],
+    ]},
+    {id:"other", name:"其他", items:[
+      ["other-camera","底片相機"],
+      ["other-powerbank","行動電源（新買的）"],
+      ["other-dryer","吹風機？"],
+      ["other-tissue","面紙"],
+      ["other-wetwipes","濕紙巾"],
+      ["other-mask","口罩"],
+      ["other-nailclipper","指甲剪"],
+      ["other-cottonswab","棉花棒"],
+      ["other-bottle","水壺"],
+      ["other-ipad","iPad"],
+      ["other-cables","充電線（手機、iPad、行動電源、Apple Watch）"],
+      ["other-pen","筆"],
+    ]},
+  ];
+
+  var STORAGE_KEY = "kamikochi_packing_v1";
+
+  function loadState(){
+    try{
+      var raw = window.localStorage.getItem(STORAGE_KEY);
+      return raw ? JSON.parse(raw) : {};
+    }catch(e){ return {}; }
+  }
+  function saveState(state){
+    try{ window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }catch(e){}
+  }
+
+  var state = loadState();
+  var catsEl = document.getElementById("cats");
+  var totalItems = 0;
+
+  DATA.forEach(function(cat){
+    totalItems += cat.items.length;
+
+    var catEl = document.createElement("section");
+    catEl.className = "cat";
+    catEl.setAttribute("data-cat", cat.id);
+
+    var head = document.createElement("div");
+    head.className = "cat-head";
+    head.innerHTML =
+      '<span class="cat-dot"></span>' +
+      '<span class="cat-name">' + cat.name + '</span>' +
+      '<span class="cat-count" data-count-for="' + cat.id + '"></span>';
+    catEl.appendChild(head);
+
+    var itemsEl = document.createElement("div");
+    itemsEl.className = "items";
+
+    cat.items.forEach(function(pair){
+      var id = pair[0], label = pair[1];
+      var row = document.createElement("div");
+      row.className = "item";
+      row.innerHTML =
+        '<label>' +
+          '<input type="checkbox" data-id="' + id + '" ' + (state[id] ? "checked" : "") + ' />' +
+          '<span class="txt">' + label + '</span>' +
+        '</label>';
+      itemsEl.appendChild(row);
+    });
+
+    catEl.appendChild(itemsEl);
+    catsEl.appendChild(catEl);
+  });
+
+  document.getElementById("totalCount").textContent = totalItems;
+
+  function updateCatCount(catId){
+    var cat = DATA.filter(function(c){ return c.id === catId; })[0];
+    var done = cat.items.filter(function(pair){ return !!state[pair[0]]; }).length;
+    var el = document.querySelector('[data-count-for="' + catId + '"]');
+    if(el) el.textContent = done + " / " + cat.items.length;
+  }
+
+  function updateProgress(){
+    var done = 0;
+    DATA.forEach(function(cat){
+      cat.items.forEach(function(pair){ if(state[pair[0]]) done++; });
+      updateCatCount(cat.id);
+    });
+    document.getElementById("doneCount").textContent = done;
+    var pct = totalItems ? Math.round(done / totalItems * 100) : 0;
+    document.getElementById("pctLabel").textContent = pct + "%";
+    document.getElementById("progressFill").style.width = pct + "%";
+  }
+
+  catsEl.addEventListener("change", function(e){
+    var box = e.target;
+    if(box.tagName !== "INPUT") return;
+    var id = box.getAttribute("data-id");
+    state[id] = box.checked;
+    saveState(state);
+    updateProgress();
+  });
+
+  document.getElementById("resetBtn").addEventListener("click", function(){
+    if(!window.confirm("要清除全部勾選嗎？")) return;
+    state = {};
+    saveState(state);
+    document.querySelectorAll('.item input[type="checkbox"]').forEach(function(box){ box.checked = false; });
+    updateProgress();
+  });
+
+  updateProgress();
+})();
+</script>
