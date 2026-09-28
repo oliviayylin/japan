@@ -6,31 +6,61 @@ as build.py) and writes a standalone print HTML, then shells out to Chrome
 headless to render it to PDF.
 
 Usage:
-    python3 build_print.py          # normal size
-    python3 build_print.py large    # larger font, saved as a separate file
+    python3 build_print.py             # normal size, colour
+    python3 build_print.py large       # larger font, colour
+    python3 build_print.py bw          # normal size, black & white (for B&W printing)
+    python3 build_print.py large bw    # larger font, black & white
 """
 import os
 import re
 import subprocess
 import sys
 
-LARGE = len(sys.argv) > 1 and sys.argv[1] == "large"
+ARGS = set(sys.argv[1:])
+LARGE = "large" in ARGS
+BW = "bw" in ARGS
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 MD_PATH = os.path.join(HERE, "itinerary.md")
-SUFFIX = "_17px" if LARGE else ""
+SUFFIX = ("_17px" if LARGE else "") + ("_黑白" if BW else "")
 OUT_HTML = os.path.join(HERE, f"行程表_列印版{SUFFIX}.html")
 OUT_PDF = os.path.join(HERE, f"行程表_列印版{SUFFIX}.pdf")
 
 CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 
+# In BW mode every tag shares one neutral grey — category is already conveyed
+# by the tag's own text label, so we don't lean on hue at all (hue is the
+# first thing that stops working once this gets printed on a B&W printer).
 TAG_STYLE = {
+    "景點": ("#EAEAEA", "#1A1A1A"),
+    "餐飲": ("#EAEAEA", "#1A1A1A"),
+    "住宿": ("#EAEAEA", "#1A1A1A"),
+    "購物": ("#EAEAEA", "#1A1A1A"),
+    "交通": ("#EAEAEA", "#1A1A1A"),
+    "班機": ("#EAEAEA", "#1A1A1A"),
+} if BW else {
     "景點": ("#DCE6DD", "#3F6350"),
     "餐飲": ("#F6E4C5", "#8A6224"),
     "住宿": ("#DEE4EE", "#3C5578"),
     "購物": ("#E9DEEE", "#7D5490"),
     "交通": ("#CCE3DE", "#34655A"),
     "班機": ("#CCE3DE", "#34655A"),
+}
+
+COLORS = {
+    "ink": "#1A1A1A", "inksoft": "#4D4D4D", "line": "#CCCCCC",
+    "badgebg": "#1A1A1A", "badgefg": "#FFFFFF",
+    "pillbg": "#EAEAEA", "pillfg": "#4D4D4D",
+    "bpbg": "#EAEAEA", "bpplace": "#333333", "bptime": "#1A1A1A",
+    "link": "#1A1A1A", "tbdborder": "#1A1A1A", "tbdtext": "#1A1A1A",
+    "extraborder": "#999999", "extratitle": "#1A1A1A",
+} if BW else {
+    "ink": "#262421", "inksoft": "#7A7266", "line": "#E6E1D8",
+    "badgebg": "#262421", "badgefg": "#FFFFFF",
+    "pillbg": "#F6F5F2", "pillfg": "#7A7266",
+    "bpbg": "#CCE3DE", "bpplace": "#445566", "bptime": "#34655A",
+    "link": "#34655A", "tbdborder": "#5CAE9C", "tbdtext": "#34655A",
+    "extraborder": "#A8C6AF", "extratitle": "#3F6350",
 }
 
 EVENT_RE = re.compile(
@@ -260,51 +290,59 @@ def render_day(d, idx, total):
 CSS = """
 @page { size: A4; margin: 14mm 13mm; }
 *{box-sizing:border-box;}
-body{margin:0;font-family:"PingFang TC","Hiragino Sans","Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif;color:#262421;font-size:%(base)spx;line-height:1.58;}
+body{margin:0;font-family:"PingFang TC","Hiragino Sans","Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif;color:%(ink)s;font-size:%(base)spx;line-height:1.58;}
 .cover{margin-bottom:7mm;}
 .cover h1{font-size:%(h1)spx;margin:0 0 6px;font-weight:800;}
-.cover .meta{font-size:%(base)spx;color:#7A7266;}
+.cover .meta{font-size:%(base)spx;color:%(inksoft)s;}
 .day{margin-bottom:7mm;break-inside:avoid-page;}
 .day-head{display:flex;align-items:center;gap:11px;margin-bottom:5px;}
-.day-badge{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;font-weight:800;font-size:%(badge)spx;background:#262421;color:#fff;border-radius:7px;padding:4px 11px;}
-.day-date{font-size:%(daydate)spx;color:#7A7266;font-weight:700;}
+.day-badge{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;font-weight:800;font-size:%(badge)spx;background:%(badgebg)s;color:%(badgefg)s;border-radius:7px;padding:4px 11px;}
+.day-date{font-size:%(daydate)spx;color:%(inksoft)s;font-weight:700;}
 .day h2{font-size:%(h2)spx;margin:2px 0 4px;font-weight:800;}
-.day-sub{font-size:%(daysub)spx;color:#7A7266;margin:0 0 7px;}
+.day-sub{font-size:%(daysub)spx;color:%(inksoft)s;margin:0 0 7px;}
 .day-tags{margin-bottom:8px;}
-.pill{display:inline-block;font-size:%(pill)spx;font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;background:#F6F5F2;color:#7A7266;border-radius:6px;padding:2px 8px;margin-right:6px;}
-.bp{display:flex;align-items:center;gap:11px;background:#CCE3DE;border-radius:11px;padding:12px 14px;margin-bottom:9px;}
+.pill{display:inline-block;font-size:%(pill)spx;font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;background:%(pillbg)s;color:%(pillfg)s;border-radius:6px;padding:2px 8px;margin-right:6px;}
+.bp{display:flex;align-items:center;gap:11px;background:%(bpbg)s;border-radius:11px;padding:12px 14px;margin-bottom:9px;}
 .bp-leg{flex:1;text-align:center;}
 .bp-code{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;font-weight:800;font-size:%(bpcode)spx;}
-.bp-place{font-size:%(bpplace)spx;color:#456;}
-.bp-time{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;font-size:%(bptime)spx;font-weight:700;color:#34655A;margin-top:4px;}
-.bp-mid{flex:0 0 auto;text-align:center;font-size:%(bpplace)spx;color:#456;line-height:1.5;}
-.flow{border-top:1px solid #E6E1D8;}
-.ev{display:flex;align-items:flex-start;gap:9px;padding:%(evpad)spx 0;border-bottom:1px solid #E6E1D8;break-inside:avoid-page;}
-.ev-time{flex:0 0 %(evtimew)spx;font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;font-size:%(evtime)spx;font-weight:700;color:#7A7266;padding-top:2px;}
+.bp-place{font-size:%(bpplace)spx;color:%(bpplace_c)s;}
+.bp-time{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;font-size:%(bptime)spx;font-weight:700;color:%(bptime_c)s;margin-top:4px;}
+.bp-mid{flex:0 0 auto;text-align:center;font-size:%(bpplace)spx;color:%(bpplace_c)s;line-height:1.5;}
+.flow{border-top:1px solid %(line)s;}
+.ev{display:flex;align-items:flex-start;gap:9px;padding:%(evpad)spx 0;border-bottom:1px solid %(line)s;break-inside:avoid-page;}
+.ev-time{flex:0 0 %(evtimew)spx;font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;font-size:%(evtime)spx;font-weight:700;color:%(inksoft)s;padding-top:2px;}
 .ev-tag{flex:0 0 auto;font-size:%(evtag)spx;font-weight:700;border-radius:5px;padding:2px 7px;white-space:nowrap;}
 .ev-body{flex:1;min-width:0;}
 .ev-title{font-size:%(base)spx;font-weight:700;}
-.ev-title a{color:#34655A;text-decoration:underline;}
-.ev-sub{font-size:%(evsub)spx;color:#7A7266;margin-top:2px;}
-.ev-sub a{color:#34655A;text-decoration:underline;}
-.ev-hours{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;font-size:%(evsub)spx;color:#34655A;margin-top:2px;}
-.tbd{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;font-size:%(tbd)spx;font-weight:700;color:#34655A;border:1px dashed #5CAE9C;border-radius:5px;padding:0 5px;}
-.extra{margin-top:9px;border:2px dashed #A8C6AF;border-radius:11px;padding:9px 12px;break-inside:avoid-page;}
-.extra-title{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;font-size:%(evtag)spx;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#3F6350;margin-bottom:6px;}
+.ev-title a{color:%(link)s;text-decoration:underline;}
+.ev-sub{font-size:%(evsub)spx;color:%(inksoft)s;margin-top:2px;}
+.ev-sub a{color:%(link)s;text-decoration:underline;}
+.ev-hours{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;font-size:%(evsub)spx;color:%(link)s;margin-top:2px;}
+.tbd{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;font-size:%(tbd)spx;font-weight:700;color:%(tbdtext)s;border:1px dashed %(tbdborder)s;border-radius:5px;padding:0 5px;}
+.extra{margin-top:9px;border:2px dashed %(extraborder)s;border-radius:11px;padding:9px 12px;break-inside:avoid-page;}
+.extra-title{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;font-size:%(evtag)spx;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:%(extratitle)s;margin-bottom:6px;}
 .extra-row{font-size:%(evsub)spx;padding:2px 0;}
-.extra-row .extra-time{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;font-weight:700;color:#7A7266;margin-left:2px;}
-.extra-row .extra-loc{color:#7A7266;margin-left:6px;}
-""" % (
-    {
-        "base": 17, "h1": 30, "badge": 16, "daydate": 16, "h2": 23, "daysub": 16,
-        "pill": 14, "bpcode": 21, "bpplace": 13, "bptime": 17, "evpad": 8,
-        "evtimew": 48, "evtime": 14, "evtag": 13, "evsub": 15, "tbd": 12,
-    } if LARGE else {
-        "base": 13.5, "h1": 25, "badge": 12.5, "daydate": 13, "h2": 19, "daysub": 12.5,
-        "pill": 11, "bpcode": 17, "bpplace": 10.5, "bptime": 14, "evpad": 6.5,
-        "evtimew": 40, "evtime": 11, "evtag": 10.5, "evsub": 12, "tbd": 10,
-    }
-)
+.extra-row .extra-time{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;font-weight:700;color:%(inksoft)s;margin-left:2px;}
+.extra-row .extra-loc{color:%(inksoft)s;margin-left:6px;}
+""" % {
+    **(
+        {
+            "base": 17, "h1": 30, "badge": 16, "daydate": 16, "h2": 23, "daysub": 16,
+            "pill": 14, "bpcode": 21, "bpplace": 13, "bptime": 17, "evpad": 8,
+            "evtimew": 48, "evtime": 14, "evtag": 13, "evsub": 15, "tbd": 12,
+        } if LARGE else {
+            "base": 13.5, "h1": 25, "badge": 12.5, "daydate": 13, "h2": 19, "daysub": 12.5,
+            "pill": 11, "bpcode": 17, "bpplace": 10.5, "bptime": 14, "evpad": 6.5,
+            "evtimew": 40, "evtime": 11, "evtag": 10.5, "evsub": 12, "tbd": 10,
+        }
+    ),
+    "ink": COLORS["ink"], "inksoft": COLORS["inksoft"], "line": COLORS["line"],
+    "badgebg": COLORS["badgebg"], "badgefg": COLORS["badgefg"],
+    "pillbg": COLORS["pillbg"], "pillfg": COLORS["pillfg"],
+    "bpbg": COLORS["bpbg"], "bpplace_c": COLORS["bpplace"], "bptime_c": COLORS["bptime"],
+    "link": COLORS["link"], "tbdborder": COLORS["tbdborder"], "tbdtext": COLORS["tbdtext"],
+    "extraborder": COLORS["extraborder"], "extratitle": COLORS["extratitle"],
+}
 
 
 def main():
