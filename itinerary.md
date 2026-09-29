@@ -106,7 +106,7 @@
 標籤: 朝市, 水族館
 
 ## 行程
-- [餐飲] 早餐：[Yoake](https://www.google.com/maps/search/?api=1&query=Yoake%20%E5%90%8D%E5%8F%A4%E5%B1%8B)(8點營業) — 車程約15分鐘，早餐備案：[Kannon Coffee Meieki](https://maps.app.goo.gl/ybECm85oQmXuszDD9?g_st=il)(步行9分鐘)
+- [餐飲] 早餐：[Piyorin village](https://www.google.com/maps/search/?api=1&query=Piyorin%20village%20%E5%90%8D%E5%8F%A4%E5%B1%8B) — 車程約17分鐘。ㄧ組人先去現場抽牌候位，另一組輕鬆前往
 - [購物] 東別院朝市(10:00~14:00, 吃午餐） — 車程約15分鐘
 - 14:00 [景點] [名古屋水族館](https://www.google.com/maps/search/?api=1&query=%E5%90%8D%E5%8F%A4%E5%B1%8B%E6%B8%AF%E6%B0%B4%E6%97%8F%E9%A4%A8)(最好是2點前抵達並停好車) — 車程約15分鐘
 - [餐飲] 晚餐：[Iroriya いろり屋 名古屋駅前店](https://www.google.com/maps/search/?api=1&query=%E3%81%84%E3%82%8D%E3%82%8A%E5%B1%8B%20%E5%90%8D%E5%8F%A4%E5%B1%8B%E9%A7%85%E5%89%8D%E5%BA%97) — 車程約18分鐘。居酒屋（有雞翅、生魚片)滿足每位需求{營業 訂位時間：18:30　・　營業時間：16:00~24:00}
@@ -129,7 +129,7 @@
 標籤: 榮商圈
 
 ## 行程
-- [餐飲] 早餐：[Piyorin village](https://www.google.com/maps/search/?api=1&query=Piyorin%20village%20%E5%90%8D%E5%8F%A4%E5%B1%8B) — 車程約17分鐘。ㄧ組人先去現場抽牌候位，另一組輕鬆前往
+- [餐飲] 早餐：[Yoake](https://www.google.com/maps/search/?api=1&query=Yoake%20%E5%90%8D%E5%8F%A4%E5%B1%8B)(8點營業) — 車程約15分鐘，早餐備案：[Kannon Coffee Meieki](https://maps.app.goo.gl/ybECm85oQmXuszDD9?g_st=il)(步行9分鐘)
 - [購物] 榮區大國藥妝及對面的唐吉軻德 — 車程約10分鐘。買藥妝、零食、晴晴許願坐摩天輪(在大國藥妝)
 - [餐飲] 午餐：[敘敘苑](https://maps.app.goo.gl/nAU1pDa545GNDxVr6?g_st=il) — 步行約6分鐘{營業 訂位時間：13:00　・　營業時間：11:00~23:00}
 - [購物] 榮商圈 — 名古屋PARCO（寶可夢中心・CHIIKAWA LAND）・綠洲21・中部電力MIRAI TOWER・LOFT・Montbell・三越

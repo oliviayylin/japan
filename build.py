@@ -96,7 +96,7 @@ DAY_GEO = {
         {"label": "名古屋水族館", "lat": 35.0868, "lng": 136.8978},
     ],
     "day7": [
-        {"label": "早餐：Piyorin village", "lat": 35.1703, "lng": 136.8820},
+        {"label": "早餐：Yoake", "lat": 35.1703, "lng": 136.8820},
         {"label": "大國藥妝（榮）", "lat": 35.1685, "lng": 136.9075},
         {"label": "午餐：敘敘苑", "lat": 35.1665, "lng": 136.9070},
         {"label": "寶可夢中心（PARCO）", "lat": 35.1667, "lng": 136.9086},
@@ -170,12 +170,12 @@ EVENT_PHOTO_RULES = {
         ("白壁別邸", "D5-炭燒富士鰻魚白壁別邸.jpg"),
     ],
     "day6": [
-        ("Yoake", "D6-Yoake.jpg"),
+        ("Piyorin", "D7-Piyorinvillage.webp"),
         ("名古屋水族館", "D6-名古屋水族館.jpg"),
         ("Iroriya", "D6-Iroriya.jpg"),
     ],
     "day7": [
-        ("Piyorin", "D7-Piyorinvillage.webp"),
+        ("Yoake", "D6-Yoake.jpg"),
         ("敘敘苑", "D7-敘敘苑.jpg"),
         ("札幌螃蟹本家", "D7-札幌螃蟹本家.jpg"),
     ],
