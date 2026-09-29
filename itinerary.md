@@ -131,7 +131,7 @@
 ## 行程
 - [餐飲] 早餐：[Yoake](https://www.google.com/maps/search/?api=1&query=Yoake%20%E5%90%8D%E5%8F%A4%E5%B1%8B)(8點營業) — 車程約15分鐘，早餐備案：[Kannon Coffee Meieki](https://maps.app.goo.gl/ybECm85oQmXuszDD9?g_st=il)(步行9分鐘)
 - [購物] 榮區大國藥妝及對面的唐吉軻德 — 車程約10分鐘。買藥妝、零食、晴晴許願坐摩天輪(在大國藥妝)
-- [餐飲] 午餐：[敘敘苑](https://maps.app.goo.gl/nAU1pDa545GNDxVr6?g_st=il) — 步行約6分鐘{營業 訂位時間：13:00　・　營業時間：11:00~23:00}
+- [餐飲] 午餐：[敘敘苑](https://maps.app.goo.gl/nAU1pDa545GNDxVr6?g_st=il) — 步行約6分鐘{營業 訂位時間：12:00　・　營業時間：11:00~23:00}
 - [購物] 榮商圈 — 名古屋PARCO（寶可夢中心・CHIIKAWA LAND）・綠洲21・中部電力MIRAI TOWER・LOFT・Montbell・三越
 - [餐飲] 晚餐：[札幌螃蟹本家 榮中央分店](https://maps.app.goo.gl/rtM7eUNp2trC3ZKF9?g_st=il){營業 訂位時間：18:30　・　營業時間：17:00~22:00}
 
